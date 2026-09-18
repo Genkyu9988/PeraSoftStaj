@@ -15,27 +15,27 @@ class ModyHomeView extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: ModyPaddings.pageHorizontal,
+              padding: PaddingItems.pageHorizontal,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const _ModyHeader(),
-                  const SizedBox(height: ModySizes.normalSpace),
+                  const SizedBox(height: SizeItems.normalSpace),
                   const _ModeTabs(),
                   _UploadArea(uploadText: _uploadText),
-                  const SizedBox(height: ModySizes.normalSpace),
+                  const SizedBox(height: SizeItems.normalSpace),
                   const _OptionBoxes(),
-                  const SizedBox(height: ModySizes.smallSpace),
+                  const SizedBox(height: SizeItems.smallSpace),
                   Text(
                     _sampleCarsTitle,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: ModyColors.primaryText,
+                      color: ColorItems.primaryText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: ModySizes.smallSpace),
+                  const SizedBox(height: SizeItems.smallSpace),
                   const _SampleCars(),
-                  const SizedBox(height: ModySizes.largeSpace),
+                  const SizedBox(height: SizeItems.largeSpace),
                   _ModifyCarArea(title: _modifyCarText),
                 ],
               ),
@@ -55,19 +55,15 @@ class _ModyHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ModySizes.headerHeight,
+      height: 42,
       child: Row(
         children: [
-          const Icon(
-            Icons.directions_car,
-            color: ModyColors.logoColor,
-            size: ModySizes.logoSize,
-          ),
-          const SizedBox(width: ModySizes.smallSpace),
+          const Icon(Icons.directions_car, color: Colors.white70, size: 32),
+          const SizedBox(width: SizeItems.smallSpace),
           Text(
             'Mody AI',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: ModyColors.primaryText,
+              color: ColorItems.primaryText,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -85,24 +81,24 @@ class _ProArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: ModyPaddings.proArea,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.circular(ModySizes.normalRadius),
-        border: Border.all(color: ModyColors.softBorder),
+        borderRadius: BorderRadius.circular(SizeItems.normalRadius),
+        border: Border.all(color: ColorItems.softBorder),
       ),
       child: Row(
         children: [
           const Icon(
             Icons.flag,
-            color: ModyColors.primaryText,
-            size: ModySizes.smallIcon,
+            color: ColorItems.primaryText,
+            size: SizeItems.smallIcon,
           ),
-          const SizedBox(width: ModySizes.smallSpace),
+          const SizedBox(width: SizeItems.smallSpace),
           Text(
             'PRO',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: ModyColors.primaryText,
+              color: ColorItems.primaryText,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -118,23 +114,20 @@ class _ModeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ModySizes.tabHeight,
+      height: SizeItems.tabHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           Expanded(
-            child: _ModeTab(
-              title: 'Style Builder',
-              color: ModyColors.styleBuilder,
-            ),
+            child: _ModeTab(title: 'Style Builder', color: Color(0xff00AEEF)),
           ),
           Expanded(
-            child: _ModeTab(title: 'Custom Edit', color: ModyColors.customEdit),
+            child: _ModeTab(title: 'Custom Edit', color: Color(0xff4B1FA5)),
           ),
           Expanded(
-            child: _ModeTab(title: 'Detail Edit', color: ModyColors.detailEdit),
+            child: _ModeTab(title: 'Detail Edit', color: Color(0xffB63819)),
           ),
-          SizedBox(width: ModySizes.smallSpace),
+          SizedBox(width: SizeItems.smallSpace),
           _HelpArea(),
         ],
       ),
@@ -151,17 +144,17 @@ class _ModeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ModySizes.tabHeight,
+      height: SizeItems.tabHeight,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(ModySizes.normalRadius),
+        borderRadius: BorderRadius.circular(SizeItems.normalRadius),
       ),
       child: Text(
         title,
         style: Theme.of(
           context,
-        ).textTheme.bodyMedium?.copyWith(color: ModyColors.primaryText),
+        ).textTheme.bodyMedium?.copyWith(color: ColorItems.primaryText),
       ),
     );
   }
@@ -173,18 +166,18 @@ class _HelpArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ModySizes.helpSize,
-      height: ModySizes.helpSize,
-      margin: ModyPaddings.helpArea,
+      width: 24,
+      height: 24,
+      margin: const EdgeInsets.only(top: 8),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: ModyColors.cardBackground,
-        borderRadius: BorderRadius.circular(ModySizes.helpSize),
+        color: ColorItems.cardBackground,
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Text(
         '?',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: ModyColors.primaryText,
+          color: ColorItems.primaryText,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -200,20 +193,13 @@ class _UploadArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ModySizes.uploadAreaHeight,
+      height: 238,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
-            ModyColors.uploadLeft,
-            ModyColors.uploadCenter,
-            ModyColors.uploadRight,
-          ],
+          colors: [Color(0xff07111C), Color(0xff102945), Color(0xff070B11)],
         ),
-        borderRadius: BorderRadius.circular(ModySizes.normalRadius),
-        border: Border.all(
-          color: ModyColors.primaryBlue,
-          width: ModySizes.borderWidth,
-        ),
+        borderRadius: BorderRadius.circular(SizeItems.normalRadius),
+        border: Border.all(color: ColorItems.primaryBlue, width: 1.4),
       ),
       child: Stack(
         children: [
@@ -223,22 +209,22 @@ class _UploadArea extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.add_photo_alternate_outlined,
-                  color: ModyColors.secondaryText,
-                  size: ModySizes.uploadIconSize,
+                  color: ColorItems.secondaryText,
+                  size: 54,
                 ),
-                const SizedBox(height: ModySizes.normalSpace),
+                const SizedBox(height: SizeItems.normalSpace),
                 Text(
                   uploadText,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: ModyColors.secondaryText,
+                    color: ColorItems.secondaryText,
                   ),
                 ),
               ],
             ),
           ),
           const Positioned(
-            right: ModySizes.smallSpace,
-            bottom: ModySizes.smallSpace,
+            right: SizeItems.smallSpace,
+            bottom: SizeItems.smallSpace,
             child: _IdeaArea(),
           ),
         ],
@@ -253,15 +239,15 @@ class _IdeaArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: ModyPaddings.ideaArea,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: ModyColors.primaryBlue,
-        borderRadius: BorderRadius.circular(ModySizes.smallRadius),
+        color: ColorItems.primaryBlue,
+        borderRadius: BorderRadius.circular(SizeItems.smallRadius),
       ),
       child: Text(
         'Fikir Ver',
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: ModyColors.primaryText,
+          color: ColorItems.primaryText,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -275,17 +261,17 @@ class _OptionBoxes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      height: ModySizes.optionHeight,
+      height: 88,
       child: Row(
         children: [
           Expanded(
             child: _OptionBox(title: 'Stil', icon: Icons.keyboard_arrow_down),
           ),
-          SizedBox(width: ModySizes.smallSpace),
+          SizedBox(width: SizeItems.smallSpace),
           Expanded(
             child: _OptionBox(title: 'Ekstra', icon: Icons.add),
           ),
-          SizedBox(width: ModySizes.smallSpace),
+          SizedBox(width: SizeItems.smallSpace),
           Expanded(
             child: _OptionBox(title: 'Renk', icon: Icons.keyboard_arrow_down),
           ),
@@ -304,10 +290,10 @@ class _OptionBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: ModyPaddings.optionArea,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: ModyColors.cardBackground,
-        borderRadius: BorderRadius.circular(ModySizes.normalRadius),
+        color: ColorItems.cardBackground,
+        borderRadius: BorderRadius.circular(SizeItems.normalRadius),
       ),
       child: Row(
         children: [
@@ -315,10 +301,10 @@ class _OptionBox extends StatelessWidget {
             title,
             style: Theme.of(
               context,
-            ).textTheme.bodySmall?.copyWith(color: ModyColors.primaryText),
+            ).textTheme.bodySmall?.copyWith(color: ColorItems.primaryText),
           ),
           const Spacer(),
-          Icon(icon, color: ModyColors.primaryText, size: ModySizes.smallIcon),
+          Icon(icon, color: ColorItems.primaryText, size: SizeItems.smallIcon),
         ],
       ),
     );
@@ -331,15 +317,15 @@ class _SampleCars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      height: ModySizes.sampleCircleSize,
+      height: SizeItems.sampleCircleSize,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _SampleCircle(color: ModyColors.sampleOne),
-          _SampleCircle(color: ModyColors.sampleTwo),
-          _SampleCircle(color: ModyColors.sampleThree),
-          _SampleCircle(color: ModyColors.sampleFour),
-          _SampleCircle(color: ModyColors.sampleFive),
+          _SampleCircle(),
+          _SampleCircle(),
+          _SampleCircle(),
+          _SampleCircle(),
+          _SampleCircle(),
         ],
       ),
     );
@@ -347,19 +333,17 @@ class _SampleCars extends StatelessWidget {
 }
 
 class _SampleCircle extends StatelessWidget {
-  const _SampleCircle({required this.color});
-
-  final Color color;
+  const _SampleCircle();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ModySizes.sampleCircleSize,
-      height: ModySizes.sampleCircleSize,
+      width: SizeItems.sampleCircleSize,
+      height: SizeItems.sampleCircleSize,
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(ModySizes.sampleCircleSize),
-        border: Border.all(color: ModyColors.softBorder),
+        color: ColorItems.sampleColor,
+        borderRadius: BorderRadius.circular(SizeItems.sampleCircleSize),
+        border: Border.all(color: ColorItems.softBorder),
       ),
     );
   }
@@ -373,16 +357,16 @@ class _ModifyCarArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ModySizes.modifyAreaHeight,
+      height: 60,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [ModyColors.buttonLeft, ModyColors.buttonRight],
+          colors: [Color(0xff12C8E9), Color(0xff087BFF)],
         ),
-        borderRadius: BorderRadius.circular(ModySizes.modifyAreaHeight),
+        borderRadius: BorderRadius.circular(60),
         boxShadow: const [
           BoxShadow(
-            color: ModyColors.buttonShadow,
-            blurRadius: ModySizes.shadowBlur,
+            color: Color(0xff0B3159),
+            blurRadius: 18,
             offset: Offset(0, 8),
           ),
         ],
@@ -393,15 +377,15 @@ class _ModifyCarArea extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: ModyColors.primaryText,
+              color: ColorItems.primaryText,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(width: ModySizes.normalSpace),
+          const SizedBox(width: SizeItems.normalSpace),
           const Icon(
             Icons.auto_awesome,
-            color: ModyColors.primaryText,
-            size: ModySizes.normalIcon,
+            color: ColorItems.primaryText,
+            size: SizeItems.normalIcon,
           ),
         ],
       ),
@@ -415,33 +399,61 @@ class _BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ModySizes.bottomBarHeight,
+      height: 78,
       color: Colors.black,
-      padding: ModyPaddings.bottomBar,
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: const Row(
         children: [
           Expanded(
             child: _BottomBarItem(
               title: 'Üret',
-              icon: Icons.generating_tokens_outlined,
-              isActive: true,
+              iconArea: Icon(
+                Icons.generating_tokens_outlined,
+                color: ColorItems.primaryText,
+                size: SizeItems.normalIcon,
+              ),
+              textColor: ColorItems.primaryText,
             ),
           ),
           Expanded(
             child: _BottomBarItem(
               title: 'Explore',
-              icon: Icons.layers_outlined,
+              iconArea: Icon(
+                Icons.layers_outlined,
+                color: ColorItems.passiveText,
+                size: SizeItems.normalIcon,
+              ),
+              textColor: ColorItems.passiveText,
             ),
           ),
           Expanded(
             child: _BottomBarItem(
               title: 'AI Video',
-              icon: Icons.video_collection_outlined,
-              showBadge: true,
+              iconArea: Stack(
+                children: [
+                  Center(
+                    child: Icon(
+                      Icons.video_collection_outlined,
+                      color: ColorItems.passiveText,
+                      size: SizeItems.normalIcon,
+                    ),
+                  ),
+                  Positioned(top: 0, right: 0, child: _NewBadge()),
+                ],
+              ),
+              textColor: ColorItems.passiveText,
             ),
           ),
           Expanded(
-            child: _BottomBarItem(title: 'Garaj', icon: Icons.garage_outlined),
+            child: _BottomBarItem(
+              title: 'Garaj',
+              iconArea: Icon(
+                Icons.garage_outlined,
+                color: ColorItems.passiveText,
+                size: SizeItems.normalIcon,
+              ),
+              textColor: ColorItems.passiveText,
+            ),
           ),
         ],
       ),
@@ -452,44 +464,25 @@ class _BottomBar extends StatelessWidget {
 class _BottomBarItem extends StatelessWidget {
   const _BottomBarItem({
     required this.title,
-    required this.icon,
-    this.isActive = false,
-    this.showBadge = false,
+    required this.iconArea,
+    required this.textColor,
   });
 
   final String title;
-  final IconData icon;
-  final bool isActive;
-  final bool showBadge;
+  final Widget iconArea;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
-    final Color itemColor = isActive
-        ? ModyColors.primaryText
-        : ModyColors.bottomPassive;
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          width: ModySizes.bottomIconArea,
-          height: ModySizes.bottomIconArea,
-          child: Stack(
-            children: [
-              Center(
-                child: Icon(icon, color: itemColor, size: ModySizes.normalIcon),
-              ),
-              if (showBadge)
-                const Positioned(top: 0, right: 0, child: _NewBadge()),
-            ],
-          ),
-        ),
+        SizedBox(width: 32, height: 32, child: iconArea),
         Text(
           title,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: itemColor,
-            fontSize: ModySizes.bottomBarFontSize,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: textColor, fontSize: 10),
         ),
       ],
     );
@@ -502,87 +495,45 @@ class _NewBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: ModyPaddings.badge,
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
       decoration: BoxDecoration(
-        color: ModyColors.badge,
-        borderRadius: BorderRadius.circular(ModySizes.smallRadius),
+        color: ColorItems.badge,
+        borderRadius: BorderRadius.circular(SizeItems.smallRadius),
       ),
       child: Text(
         'Yeni',
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: ModyColors.primaryText,
-          fontSize: ModySizes.badgeFontSize,
+          color: ColorItems.primaryText,
+          fontSize: 8,
         ),
       ),
     );
   }
 }
 
-class ModyColors {
+class ColorItems {
   static const Color primaryText = Color(0xffF5F5F7);
   static const Color secondaryText = Color(0xff7A7A80);
-  static const Color logoColor = Color(0xffD7D7D7);
   static const Color primaryBlue = Color(0xff03AEF5);
-  static const Color styleBuilder = Color(0xff00AEEF);
-  static const Color customEdit = Color(0xff4B1FA5);
-  static const Color detailEdit = Color(0xffB63819);
   static const Color cardBackground = Color(0xff171717);
   static const Color softBorder = Color(0xff353535);
-  static const Color uploadLeft = Color(0xff07111C);
-  static const Color uploadCenter = Color(0xff102945);
-  static const Color uploadRight = Color(0xff070B11);
-  static const Color buttonLeft = Color(0xff12C8E9);
-  static const Color buttonRight = Color(0xff087BFF);
-  static const Color buttonShadow = Color(0xff0B3159);
-  static const Color bottomPassive = Color(0xff55555B);
+  static const Color passiveText = Color(0xff55555B);
   static const Color badge = Color(0xffFF382F);
-  static const Color sampleOne = Color(0xff30343A);
-  static const Color sampleTwo = Color(0xff4A4F56);
-  static const Color sampleThree = Color(0xff686D73);
-  static const Color sampleFour = Color(0xff8B9096);
-  static const Color sampleFive = Color(0xff3D4248);
+  static const Color sampleColor = Color(0xff3D4248);
 }
 
-class ModyPaddings {
+class PaddingItems {
   static const EdgeInsets pageHorizontal = EdgeInsets.symmetric(horizontal: 12);
-  static const EdgeInsets proArea = EdgeInsets.symmetric(
-    horizontal: 10,
-    vertical: 6,
-  );
-  static const EdgeInsets helpArea = EdgeInsets.only(top: 8);
-  static const EdgeInsets ideaArea = EdgeInsets.symmetric(
-    horizontal: 16,
-    vertical: 10,
-  );
-  static const EdgeInsets optionArea = EdgeInsets.symmetric(horizontal: 8);
-  static const EdgeInsets bottomBar = EdgeInsets.symmetric(vertical: 4);
-  static const EdgeInsets badge = EdgeInsets.symmetric(
-    horizontal: 4,
-    vertical: 1,
-  );
 }
 
-class ModySizes {
-  static const double headerHeight = 42;
+class SizeItems {
   static const double tabHeight = 48;
-  static const double uploadAreaHeight = 238;
-  static const double optionHeight = 88;
   static const double sampleCircleSize = 55;
-  static const double modifyAreaHeight = 60;
-  static const double bottomBarHeight = 78;
-  static const double bottomIconArea = 32;
-  static const double helpSize = 24;
-  static const double logoSize = 32;
-  static const double uploadIconSize = 54;
   static const double normalIcon = 24;
   static const double smallIcon = 18;
   static const double normalRadius = 13;
   static const double smallRadius = 8;
-  static const double borderWidth = 1.4;
   static const double smallSpace = 8;
   static const double normalSpace = 14;
   static const double largeSpace = 22;
-  static const double shadowBlur = 18;
-  static const double badgeFontSize = 8;
-  static const double bottomBarFontSize = 10;
 }
