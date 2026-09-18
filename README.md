@@ -1,17 +1,44 @@
-# perasoft_staj
+# PeraSoft Staj
 
-A new Flutter project.
+Bu proje, Mody AI uygulamasının ana ekranından esinlenilen statik bir Flutter
+arayüz çalışmasıdır.
 
-## Getting Started
+## Proje kapsamı
 
-This project is a starting point for a Flutter application.
+- Uygulamada yalnızca ana ekran bulunur.
+- Ekrandaki alanlar henüz tıklanabilir değildir.
+- Style Builder, Custom Edit ve Detail Edit statik içerikleri hazırlanmıştır.
+- İçerikler arasında geçiş henüz kullanıcı etkileşimine bağlanmamıştır.
+- Stil, Ekstra ve Renk için görselsiz mock seçenek panelleri bulunur.
+- Detail Edit içinde Açı, Yapılandırma ve ortak Renk panelleri bulunur.
+- Seçenek panelleri henüz tıklama veya seçim durumuna bağlı değildir.
+- Yapay zekâ veya başka bir API bağlantısı yoktur.
+- Örnek araba görselleri yerine dairesel yer tutucular kullanılır.
+- Arayüz `StatelessWidget` ve temel Flutter widget'ları ile hazırlanmıştır.
+- Bu aşamada hedef görünüm 390 x 844 boyutundaki telefon portresidir.
 
-A few resources to get you started if this is your first Flutter project:
+## Çalıştırma
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```sh
+flutter pub get
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Statik önizleme değerleri
+
+`MyApp` içindeki `contentIndex` ana içeriği belirler:
+
+- `0`: Style Builder
+- `1`: Custom Edit
+- `2`: Detail Edit
+
+`panelIndex` değeri `0` olduğunda panel kapalıdır. Style Builder içinde
+`1` Stil, `2` Ekstra, `3` Renk panelini; Detail Edit içinde `1` Açı,
+`2` Yapılandırma, `3` ortak Renk panelini gösterir.
+
+## Kontrol
+
+```sh
+flutter analyze
+flutter test
+```
