@@ -5,107 +5,97 @@ import 'package:perasoft_staj/main.dart';
 void _setPhoneSize(WidgetTester tester) {
   tester.view.physicalSize = const Size(390, 844);
   tester.view.devicePixelRatio = 1;
-
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
 }
 
+Future<void> _tap(WidgetTester tester, String title) async {
+  await tester.tap(find.text(title));
+  await tester.pumpAndSettle();
+}
+
 void main() {
-  testWidgets('Mody ana ekranı doğru içerikle görünür', (
-    WidgetTester tester,
+  testWidgets('Renk kategorileri iki modda da mock isimleri değiştirir', (
+    tester,
   ) async {
     _setPhoneSize(tester);
-
     await tester.pumpWidget(const MyApp());
+    for (final mode in ['Style Builder', 'Detail Edit']) {
+      await _tap(tester, mode);
+      await _tap(tester, 'Renk');
+      for (final name in ['Kırmızı', 'Mavi', 'Mor', 'Gri']) {
+        expect(find.text(name), findsOneWidget);
+      }
+      await _tap(tester, 'Metalik');
+      for (final name in ['Kırmızı', 'Mavi', 'Mor', 'Gri']) {
+        expect(find.text('Premium $name'), findsOneWidget);
+        expect(find.text(name), findsNothing);
+      }
+      await _tap(tester, 'Özel');
+      for (final name in ['Kırmızı', 'Mavi', 'Mor', 'Gri']) {
+        expect(find.text('Özel $name'), findsOneWidget);
+        expect(find.text('Premium $name'), findsNothing);
+      }
+      await _tap(tester, 'Mat');
+      expect(find.text('Kırmızı'), findsOneWidget);
+      await tester.tap(find.byTooltip('Paneli kapat'));
+      await tester.pumpAndSettle();
+    }
+    expect(tester.takeException(), isNull);
+  });
 
+  testWidgets('Sekmeler aynı ekranın içeriğini günceller', (tester) async {
+    _setPhoneSize(tester);
+    await tester.pumpWidget(const MyApp());
     expect(find.text('Mody AI'), findsOneWidget);
-    expect(find.text('Style Builder'), findsOneWidget);
-    expect(find.text('Araç Fotoğrafı Yüklemek İçin Dokunun'), findsOneWidget);
-    expect(find.text('Örnek Arabalar'), findsOneWidget);
-    expect(find.text('Arabamı Modifiye Et'), findsOneWidget);
-    expect(find.text('Üret'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('Ekranda tıklanabilir bir buton bulunmaz', (
-    WidgetTester tester,
-  ) async {
-    _setPhoneSize(tester);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 0));
-
-    expect(find.byType(ElevatedButton), findsNothing);
-    expect(find.byType(TextButton), findsNothing);
-    expect(find.byType(IconButton), findsNothing);
-    expect(find.byType(GestureDetector), findsNothing);
-  });
-
-  testWidgets('Custom Edit içeriği statik olarak görünür', (
-    WidgetTester tester,
-  ) async {
-    _setPhoneSize(tester);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 1));
-
+    expect(find.text('Stil'), findsOneWidget);
+    await _tap(tester, 'Custom Edit');
     expect(find.text('Modifikasyonunuzu tanımlayın'), findsOneWidget);
-    expect(find.textContaining('Spor görünümlü'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('Detail Edit içeriği aynı tasarım diliyle görünür', (
-    WidgetTester tester,
-  ) async {
-    _setPhoneSize(tester);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 2));
-
+    expect(find.text('Stil'), findsNothing);
+    await _tap(tester, 'Detail Edit');
     expect(find.text('Açı'), findsOneWidget);
     expect(find.text('Ayarla'), findsOneWidget);
-    expect(find.text('Canlı\nEdit'), findsOneWidget);
-    expect(find.text('Örnek Arabalar'), findsOneWidget);
+    await _tap(tester, 'Style Builder');
+    expect(find.text('Stil'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Mock seçenek panelleri statik olarak görünür', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('Her iki modun panelleri açılıp kapatılır', (tester) async {
     _setPhoneSize(tester);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 0, panelIndex: 1));
-    expect(find.text('Stil seçin'), findsOneWidget);
-    expect(find.text('Klasik'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 0, panelIndex: 2));
-    expect(find.text('Ekstra seçin'), findsOneWidget);
-    expect(find.text('Jant'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 0, panelIndex: 3));
-    expect(find.text('Renk seçin'), findsOneWidget);
-    expect(find.text('Kırmızı'), findsOneWidget);
+    await tester.pumpWidget(const MyApp());
+    for (final mode in ['Style Builder', 'Detail Edit']) {
+      await _tap(tester, mode);
+      final panels = mode == 'Style Builder'
+          ? {
+              'Stil': 'Stil seçin',
+              'Ekstra': 'Ekstra seçin',
+              'Renk': 'Renk seçin',
+            }
+          : {
+              'Açı': 'Açı seçin',
+              'Ayarla': 'Yapılandırma seçin',
+              'Renk': 'Renk seçin',
+            };
+      for (final entry in panels.entries) {
+        await _tap(tester, entry.key);
+        expect(find.text(entry.value), findsOneWidget);
+        await tester.tap(find.byTooltip('Paneli kapat'));
+        await tester.pumpAndSettle();
+        expect(find.text(entry.value), findsNothing);
+      }
+    }
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Detail Edit mock panelleri statik olarak görünür', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('Sekme değişince açık panel sıfırlanır', (tester) async {
     _setPhoneSize(tester);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 2, panelIndex: 1));
-    expect(find.text('Açı seçin'), findsOneWidget);
-    expect(find.text('Ön Görünüm'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 2, panelIndex: 2));
-    expect(find.text('Yapılandırma seçin'), findsOneWidget);
-    expect(find.text('Spoiler'), findsOneWidget);
-    expect(find.text('Egzoz'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-
-    await tester.pumpWidget(const MyApp(contentIndex: 2, panelIndex: 3));
-    expect(find.text('Renk seçin'), findsOneWidget);
+    await tester.pumpWidget(const MyApp());
+    await _tap(tester, 'Renk');
     expect(find.text('Kırmızı'), findsOneWidget);
+    await _tap(tester, 'Custom Edit');
+    expect(find.text('Renk seçin'), findsNothing);
+    await _tap(tester, 'Style Builder');
+    expect(find.text('Renk seçin'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 }

@@ -6,10 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, this.contentIndex = 0, this.panelIndex = 0});
-
-  final int contentIndex;
-  final int panelIndex;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Mody AI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
-      home: ModyHomeView(contentIndex: contentIndex, panelIndex: panelIndex),
+      home: const ModyHomeView(),
     );
   }
 }

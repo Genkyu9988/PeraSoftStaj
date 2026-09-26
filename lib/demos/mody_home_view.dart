@@ -1,32 +1,56 @@
 import 'package:flutter/material.dart';
 
-class ModyHomeView extends StatelessWidget {
-  const ModyHomeView({super.key, this.contentIndex = 0, this.panelIndex = 0});
+class ModyHomeView extends StatefulWidget {
+  const ModyHomeView({super.key});
 
-  final int contentIndex;
-  final int panelIndex;
+  @override
+  State<ModyHomeView> createState() => _ModyHomeViewState();
+}
+
+class _ModyHomeViewState extends State<ModyHomeView> {
+  int _contentIndex = 0;
+  int _panelIndex = 0;
+
+  void _updateContent(int index) {
+    setState(() {
+      _contentIndex = index;
+      _panelIndex = 0;
+    });
+  }
+
+  void _updatePanel(int index) {
+    setState(() {
+      _panelIndex = _panelIndex == index ? 0 : index;
+    });
+  }
+
+  void _closePanel() {
+    setState(() {
+      _panelIndex = 0;
+    });
+  }
 
   Widget _selectedContent() {
-    if (contentIndex == 1) {
+    if (_contentIndex == 1) {
       return const _CustomEditContent();
     }
-    if (contentIndex == 2) {
-      return const _DetailEditContent();
+    if (_contentIndex == 2) {
+      return _DetailEditContent(onPanelSelected: _updatePanel);
     }
-    return const _StyleBuilderContent();
+    return _StyleBuilderContent(onPanelSelected: _updatePanel);
   }
 
   Widget _selectedPanel() {
-    if (panelIndex == 3) {
+    if (_panelIndex == 3) {
       return const _ColorOptionsPanel();
     }
-    if (contentIndex == 2) {
-      if (panelIndex == 1) {
+    if (_contentIndex == 2) {
+      if (_panelIndex == 1) {
         return const _AngleOptionsPanel();
       }
       return const _AdjustmentOptionsPanel();
     }
-    if (panelIndex == 1) {
+    if (_panelIndex == 1) {
       return const _StyleOptionsPanel();
     }
     return const _ExtraOptionsPanel();
@@ -48,7 +72,7 @@ class ModyHomeView extends StatelessWidget {
                     children: [
                       const _ModyHeader(),
                       const SizedBox(height: SizeItems.normalSpace),
-                      const _ModeTabs(),
+                      _ModeTabs(onSelected: _updateContent),
                       const _UploadArea(),
                       _selectedContent(),
                     ],
@@ -58,12 +82,25 @@ class ModyHomeView extends StatelessWidget {
                 const _BottomBar(),
               ],
             ),
-            if ((contentIndex == 0 || contentIndex == 2) && panelIndex > 0)
+            if (_panelIndex > 0)
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: 78,
-                child: _selectedPanel(),
+                bottom: SizeItems.bottomBarHeight,
+                child: Stack(
+                  children: [
+                    _selectedPanel(),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: IconButton(
+                        tooltip: 'Paneli kapat',
+                        onPressed: _closePanel,
+                        icon: const Icon(Icons.close),
+                      ),
+                    ),
+                  ],
+                ),
               ),
           ],
         ),
@@ -73,15 +110,21 @@ class ModyHomeView extends StatelessWidget {
 }
 
 class _StyleBuilderContent extends StatelessWidget {
-  const _StyleBuilderContent();
+  const _StyleBuilderContent({required this.onPanelSelected});
+
+  final void Function(int) onPanelSelected;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: SizeItems.normalSpace),
-        _OptionBoxes(firstTitle: 'Stil', secondTitle: 'Ekstra'),
+        _OptionBoxes(
+          firstTitle: 'Stil',
+          secondTitle: 'Ekstra',
+          onSelected: onPanelSelected,
+        ),
         SizedBox(height: SizeItems.smallSpace),
         _SampleCarsArea(),
         SizedBox(height: SizeItems.largeSpace),
@@ -109,15 +152,21 @@ class _CustomEditContent extends StatelessWidget {
 }
 
 class _DetailEditContent extends StatelessWidget {
-  const _DetailEditContent();
+  const _DetailEditContent({required this.onPanelSelected});
+
+  final void Function(int) onPanelSelected;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(height: SizeItems.normalSpace),
-        _OptionBoxes(firstTitle: 'Açı', secondTitle: 'Ayarla'),
+        _OptionBoxes(
+          firstTitle: 'Açı',
+          secondTitle: 'Ayarla',
+          onSelected: onPanelSelected,
+        ),
         SizedBox(height: SizeItems.smallSpace),
         _SampleCarsArea(),
         SizedBox(height: SizeItems.largeSpace),
@@ -193,7 +242,9 @@ class _ProArea extends StatelessWidget {
 }
 
 class _ModeTabs extends StatelessWidget {
-  const _ModeTabs();
+  const _ModeTabs({required this.onSelected});
+
+  final void Function(int) onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -201,15 +252,27 @@ class _ModeTabs extends StatelessWidget {
       height: SizeItems.tabHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Expanded(
-            child: _ModeTab(title: 'Style Builder', color: Color(0xff00AEEF)),
+            child: _ModeTab(
+              title: 'Style Builder',
+              color: const Color(0xff00AEEF),
+              onPressed: () => onSelected(0),
+            ),
           ),
           Expanded(
-            child: _ModeTab(title: 'Custom Edit', color: Color(0xff4B1FA5)),
+            child: _ModeTab(
+              title: 'Custom Edit',
+              color: const Color(0xff4B1FA5),
+              onPressed: () => onSelected(1),
+            ),
           ),
           Expanded(
-            child: _ModeTab(title: 'Detail Edit', color: Color(0xffB63819)),
+            child: _ModeTab(
+              title: 'Detail Edit',
+              color: const Color(0xffB63819),
+              onPressed: () => onSelected(2),
+            ),
           ),
           SizedBox(width: SizeItems.smallSpace),
           _HelpArea(),
@@ -220,10 +283,15 @@ class _ModeTabs extends StatelessWidget {
 }
 
 class _ModeTab extends StatelessWidget {
-  const _ModeTab({required this.title, required this.color});
+  const _ModeTab({
+    required this.title,
+    required this.color,
+    required this.onPressed,
+  });
 
   final String title;
   final Color color;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -234,11 +302,14 @@ class _ModeTab extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(SizeItems.normalRadius),
       ),
-      child: Text(
-        title,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(color: ColorItems.primaryText),
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: ColorItems.primaryText),
+        ),
       ),
     );
   }
@@ -400,10 +471,15 @@ class _DescriptionIconArea extends StatelessWidget {
 }
 
 class _OptionBoxes extends StatelessWidget {
-  const _OptionBoxes({required this.firstTitle, required this.secondTitle});
+  const _OptionBoxes({
+    required this.firstTitle,
+    required this.secondTitle,
+    required this.onSelected,
+  });
 
   final String firstTitle;
   final String secondTitle;
+  final void Function(int) onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -415,15 +491,24 @@ class _OptionBoxes extends StatelessWidget {
             child: _OptionBox(
               title: firstTitle,
               icon: Icons.keyboard_arrow_down,
+              onPressed: () => onSelected(1),
             ),
           ),
           const SizedBox(width: SizeItems.smallSpace),
           Expanded(
-            child: _OptionBox(title: secondTitle, icon: Icons.add),
+            child: _OptionBox(
+              title: secondTitle,
+              icon: Icons.add,
+              onPressed: () => onSelected(2),
+            ),
           ),
           const SizedBox(width: SizeItems.smallSpace),
-          const Expanded(
-            child: _OptionBox(title: 'Renk', icon: Icons.keyboard_arrow_down),
+          Expanded(
+            child: _OptionBox(
+              title: 'Renk',
+              icon: Icons.keyboard_arrow_down,
+              onPressed: () => onSelected(3),
+            ),
           ),
         ],
       ),
@@ -454,10 +539,15 @@ class _SampleCarsArea extends StatelessWidget {
 }
 
 class _OptionBox extends StatelessWidget {
-  const _OptionBox({required this.title, required this.icon});
+  const _OptionBox({
+    required this.title,
+    required this.icon,
+    required this.onPressed,
+  });
 
   final String title;
   final IconData icon;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -467,17 +557,25 @@ class _OptionBox extends StatelessWidget {
         color: ColorItems.cardBackground,
         borderRadius: BorderRadius.circular(SizeItems.normalRadius),
       ),
-      child: Row(
-        children: [
-          Text(
-            title,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: ColorItems.primaryText),
-          ),
-          const Spacer(),
-          Icon(icon, color: ColorItems.primaryText, size: SizeItems.smallIcon),
-        ],
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(padding: EdgeInsets.zero),
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: ColorItems.primaryText),
+            ),
+            const Spacer(),
+            Icon(
+              icon,
+              color: ColorItems.primaryText,
+              size: SizeItems.smallIcon,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -707,21 +805,59 @@ class _AdjustmentOptionsPanel extends StatelessWidget {
   }
 }
 
-class _ColorOptionsPanel extends StatelessWidget {
+class _ColorOptionsPanel extends StatefulWidget {
   const _ColorOptionsPanel();
 
   @override
+  State<_ColorOptionsPanel> createState() => _ColorOptionsPanelState();
+}
+
+class _ColorOptionsPanelState extends State<_ColorOptionsPanel> {
+  int _categoryIndex = 0;
+
+  void _updateCategory(int index) {
+    setState(() {
+      _categoryIndex = index;
+    });
+  }
+
+  String _colorTitle(String name) {
+    if (_categoryIndex == 1) {
+      return 'Premium $name';
+    }
+    if (_categoryIndex == 2) {
+      return 'Özel $name';
+    }
+    return name;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const _OptionsPanelFrame(
+    return _OptionsPanelFrame(
       title: 'Renk seçin',
       child: Column(
         children: [
-          _ColorCategories(),
-          SizedBox(height: SizeItems.smallSpace),
-          _MockColorRow(title: 'Kırmızı', color: Color(0xffD51F18)),
-          _MockColorRow(title: 'Mavi', color: Color(0xff126EDB)),
-          _MockColorRow(title: 'Mor', color: Color(0xff7E32B8)),
-          _MockColorRow(title: 'Gri', color: Color(0xff646A72)),
+          _ColorCategories(
+            selectedIndex: _categoryIndex,
+            onSelected: _updateCategory,
+          ),
+          const SizedBox(height: SizeItems.smallSpace),
+          _MockColorRow(
+            title: _colorTitle('Kırmızı'),
+            color: const Color(0xffD51F18),
+          ),
+          _MockColorRow(
+            title: _colorTitle('Mavi'),
+            color: const Color(0xff126EDB),
+          ),
+          _MockColorRow(
+            title: _colorTitle('Mor'),
+            color: const Color(0xff7E32B8),
+          ),
+          _MockColorRow(
+            title: _colorTitle('Gri'),
+            color: const Color(0xff646A72),
+          ),
         ],
       ),
     );
@@ -861,27 +997,56 @@ class _MockPartCard extends StatelessWidget {
 }
 
 class _ColorCategories extends StatelessWidget {
-  const _ColorCategories();
+  const _ColorCategories({
+    required this.selectedIndex,
+    required this.onSelected,
+  });
+
+  final int selectedIndex;
+  final void Function(int) onSelected;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
-        Expanded(child: _ColorCategory(title: 'Mat', isSelected: true)),
-        SizedBox(width: SizeItems.smallSpace),
-        Expanded(child: _ColorCategory(title: 'Metalik')),
-        SizedBox(width: SizeItems.smallSpace),
-        Expanded(child: _ColorCategory(title: 'Özel')),
+      children: [
+        Expanded(
+          child: _ColorCategory(
+            title: 'Mat',
+            isSelected: selectedIndex == 0,
+            onPressed: () => onSelected(0),
+          ),
+        ),
+        const SizedBox(width: SizeItems.smallSpace),
+        Expanded(
+          child: _ColorCategory(
+            title: 'Metalik',
+            isSelected: selectedIndex == 1,
+            onPressed: () => onSelected(1),
+          ),
+        ),
+        const SizedBox(width: SizeItems.smallSpace),
+        Expanded(
+          child: _ColorCategory(
+            title: 'Özel',
+            isSelected: selectedIndex == 2,
+            onPressed: () => onSelected(2),
+          ),
+        ),
       ],
     );
   }
 }
 
 class _ColorCategory extends StatelessWidget {
-  const _ColorCategory({required this.title, this.isSelected = false});
+  const _ColorCategory({
+    required this.title,
+    required this.onPressed,
+    this.isSelected = false,
+  });
 
   final String title;
   final bool isSelected;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -892,11 +1057,16 @@ class _ColorCategory extends StatelessWidget {
         color: isSelected ? ColorItems.sampleColor : Colors.black,
         borderRadius: BorderRadius.circular(SizeItems.smallRadius),
       ),
-      child: Text(
-        title,
-        style: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(color: ColorItems.primaryText),
+      child: SizedBox.expand(
+        child: TextButton(
+          onPressed: onPressed,
+          child: Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: ColorItems.primaryText),
+          ),
+        ),
       ),
     );
   }
@@ -953,7 +1123,7 @@ class _BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 78,
+      height: SizeItems.bottomBarHeight,
       color: Colors.black,
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: const Row(
@@ -1073,6 +1243,7 @@ class PaddingItems {
 }
 
 class SizeItems {
+  static const double bottomBarHeight = 78;
   static const double tabHeight = 48;
   static const double sampleCircleSize = 55;
   static const double normalIcon = 24;
