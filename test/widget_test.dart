@@ -15,6 +15,36 @@ Future<void> _tap(WidgetTester tester, String title) async {
 }
 
 void main() {
+  testWidgets('Ortak başlıklar tema stilini kullanır', (tester) async {
+    _setPhoneSize(tester);
+    await tester.pumpWidget(const MyApp());
+    final context = tester.element(find.text('Mody AI'));
+    final textTheme = Theme.of(context).textTheme;
+    expect(
+      tester.widget<Text>(find.text('Mody AI')).style,
+      textTheme.titleLarge,
+    );
+    expect(
+      tester.widget<Text>(find.text('Örnek Arabalar')).style,
+      textTheme.titleMedium,
+    );
+    expect(textTheme.titleMedium?.fontWeight, FontWeight.bold);
+  });
+
+  testWidgets('Aynı sekmeye basmak açık paneli kapatır', (tester) async {
+    _setPhoneSize(tester);
+    await tester.pumpWidget(const MyApp());
+    await _tap(tester, 'Renk');
+    await _tap(tester, 'Metalik');
+    await _tap(tester, 'Metalik');
+    expect(find.text('Premium Kırmızı'), findsOneWidget);
+    await _tap(tester, 'Style Builder');
+    expect(find.text('Renk seçin'), findsNothing);
+    expect(find.text('Stil'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Renk kategorileri iki modda da mock isimleri değiştirir', (
     tester,
   ) async {
@@ -57,6 +87,28 @@ void main() {
     expect(find.text('Ayarla'), findsOneWidget);
     await _tap(tester, 'Style Builder');
     expect(find.text('Stil'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Sayfalar kaydırılır ve Custom Edit metni korunur', (
+    tester,
+  ) async {
+    _setPhoneSize(tester);
+    await tester.pumpWidget(const MyApp());
+
+    await tester.drag(find.byType(PageView), const Offset(-350, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('Modifikasyonunuzu tanımlayın'), findsOneWidget);
+
+    final descriptionField = find.byKey(
+      const Key('customEditDescriptionField'),
+    );
+    await tester.enterText(descriptionField, 'Mat siyah sportif tasarım');
+    expect(find.text('Mat siyah sportif tasarım'), findsOneWidget);
+
+    await _tap(tester, 'Detail Edit');
+    await _tap(tester, 'Custom Edit');
+    expect(find.text('Mat siyah sportif tasarım'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

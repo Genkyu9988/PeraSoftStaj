@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:perasoft_staj/product/color_items.dart';
 
 class ModyHomeView extends StatefulWidget {
   const ModyHomeView({super.key});
@@ -10,8 +11,35 @@ class ModyHomeView extends StatefulWidget {
 class _ModyHomeViewState extends State<ModyHomeView> {
   int _contentIndex = 0;
   int _panelIndex = 0;
+  late final PageController _pageController;
+  late final TextEditingController _descriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _descriptionController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
 
   void _updateContent(int index) {
+    _setContent(index);
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _setContent(int index) {
+    if (_contentIndex == index && _panelIndex == 0) return;
+
     setState(() {
       _contentIndex = index;
       _panelIndex = 0;
@@ -28,16 +56,6 @@ class _ModyHomeViewState extends State<ModyHomeView> {
     setState(() {
       _panelIndex = 0;
     });
-  }
-
-  Widget _selectedContent() {
-    if (_contentIndex == 1) {
-      return const _CustomEditContent();
-    }
-    if (_contentIndex == 2) {
-      return _DetailEditContent(onPanelSelected: _updatePanel);
-    }
-    return _StyleBuilderContent(onPanelSelected: _updatePanel);
   }
 
   Widget _selectedPanel() {
@@ -65,20 +83,38 @@ class _ModyHomeViewState extends State<ModyHomeView> {
           children: [
             Column(
               children: [
-                Padding(
-                  padding: PaddingItems.pageHorizontal,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const _ModyHeader(),
-                      const SizedBox(height: SizeItems.normalSpace),
-                      _ModeTabs(onSelected: _updateContent),
-                      const _UploadArea(),
-                      _selectedContent(),
-                    ],
+                Expanded(
+                  child: Padding(
+                    padding: PaddingItems.pageHorizontal,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const _ModyHeader(),
+                        const SizedBox(height: SizeItems.normalSpace),
+                        _ModeTabs(
+                          selectedIndex: _contentIndex,
+                          onSelected: _updateContent,
+                        ),
+                        const _UploadArea(),
+                        Expanded(
+                          child: PageView(
+                            controller: _pageController,
+                            onPageChanged: _setContent,
+                            children: [
+                              _StyleBuilderContent(
+                                onPanelSelected: _updatePanel,
+                              ),
+                              _CustomEditContent(
+                                controller: _descriptionController,
+                              ),
+                              _DetailEditContent(onPanelSelected: _updatePanel),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const Spacer(),
                 const _BottomBar(),
               ],
             ),
@@ -119,33 +155,35 @@ class _StyleBuilderContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: SizeItems.normalSpace),
+        const SizedBox(height: SizeItems.normalSpace),
         _OptionBoxes(
           firstTitle: 'Stil',
           secondTitle: 'Ekstra',
           onSelected: onPanelSelected,
         ),
-        SizedBox(height: SizeItems.smallSpace),
-        _SampleCarsArea(),
-        SizedBox(height: SizeItems.largeSpace),
-        _ModifyCarArea(),
+        const SizedBox(height: SizeItems.smallSpace),
+        const _SampleCarsArea(),
+        const SizedBox(height: SizeItems.largeSpace),
+        const _ModifyCarArea(),
       ],
     );
   }
 }
 
 class _CustomEditContent extends StatelessWidget {
-  const _CustomEditContent();
+  const _CustomEditContent({required this.controller});
+
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: SizeItems.normalSpace),
-        _DescriptionArea(),
-        SizedBox(height: SizeItems.normalSpace),
-        _ModifyCarArea(),
+        const SizedBox(height: SizeItems.normalSpace),
+        _DescriptionArea(controller: controller),
+        const SizedBox(height: SizeItems.normalSpace),
+        const _ModifyCarArea(),
       ],
     );
   }
@@ -161,16 +199,16 @@ class _DetailEditContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: SizeItems.normalSpace),
+        const SizedBox(height: SizeItems.normalSpace),
         _OptionBoxes(
           firstTitle: 'Açı',
           secondTitle: 'Ayarla',
           onSelected: onPanelSelected,
         ),
-        SizedBox(height: SizeItems.smallSpace),
-        _SampleCarsArea(),
-        SizedBox(height: SizeItems.largeSpace),
-        Row(
+        const SizedBox(height: SizeItems.smallSpace),
+        const _SampleCarsArea(),
+        const SizedBox(height: SizeItems.largeSpace),
+        const Row(
           children: [
             Expanded(child: _LiveEditArea()),
             SizedBox(width: SizeItems.smallSpace),
@@ -193,13 +231,7 @@ class _ModyHeader extends StatelessWidget {
         children: [
           const Icon(Icons.directions_car, color: Colors.white70, size: 32),
           const SizedBox(width: SizeItems.smallSpace),
-          Text(
-            'Mody AI',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: ColorItems.primaryText,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text('Mody AI', style: Theme.of(context).textTheme.titleLarge),
           const Spacer(),
           const _ProArea(),
         ],
@@ -228,13 +260,7 @@ class _ProArea extends StatelessWidget {
             size: SizeItems.smallIcon,
           ),
           const SizedBox(width: SizeItems.smallSpace),
-          Text(
-            'PRO',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: ColorItems.primaryText,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text('PRO', style: Theme.of(context).textTheme.titleMedium),
         ],
       ),
     );
@@ -242,8 +268,9 @@ class _ProArea extends StatelessWidget {
 }
 
 class _ModeTabs extends StatelessWidget {
-  const _ModeTabs({required this.onSelected});
+  const _ModeTabs({required this.selectedIndex, required this.onSelected});
 
+  final int selectedIndex;
   final void Function(int) onSelected;
 
   @override
@@ -257,6 +284,7 @@ class _ModeTabs extends StatelessWidget {
             child: _ModeTab(
               title: 'Style Builder',
               color: const Color(0xff00AEEF),
+              isSelected: selectedIndex == 0,
               onPressed: () => onSelected(0),
             ),
           ),
@@ -264,6 +292,7 @@ class _ModeTabs extends StatelessWidget {
             child: _ModeTab(
               title: 'Custom Edit',
               color: const Color(0xff4B1FA5),
+              isSelected: selectedIndex == 1,
               onPressed: () => onSelected(1),
             ),
           ),
@@ -271,6 +300,7 @@ class _ModeTabs extends StatelessWidget {
             child: _ModeTab(
               title: 'Detail Edit',
               color: const Color(0xffB63819),
+              isSelected: selectedIndex == 2,
               onPressed: () => onSelected(2),
             ),
           ),
@@ -286,11 +316,13 @@ class _ModeTab extends StatelessWidget {
   const _ModeTab({
     required this.title,
     required this.color,
+    required this.isSelected,
     required this.onPressed,
   });
 
   final String title;
   final Color color;
+  final bool isSelected;
   final void Function() onPressed;
 
   @override
@@ -299,17 +331,13 @@ class _ModeTab extends StatelessWidget {
       height: SizeItems.tabHeight,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: color,
+        color: isSelected ? color : color.withValues(alpha: 0.45),
         borderRadius: BorderRadius.circular(SizeItems.normalRadius),
+        border: isSelected ? Border.all(color: ColorItems.primaryText) : null,
       ),
       child: TextButton(
         onPressed: onPressed,
-        child: Text(
-          title,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium?.copyWith(color: ColorItems.primaryText),
-        ),
+        child: Text(title, style: Theme.of(context).textTheme.bodyMedium),
       ),
     );
   }
@@ -329,13 +357,7 @@ class _HelpArea extends StatelessWidget {
         color: ColorItems.cardBackground,
         borderRadius: BorderRadius.circular(24),
       ),
-      child: Text(
-        '?',
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: ColorItems.primaryText,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child: Text('?', style: Theme.of(context).textTheme.titleMedium),
     );
   }
 }
@@ -397,52 +419,63 @@ class _IdeaArea extends StatelessWidget {
         color: ColorItems.primaryBlue,
         borderRadius: BorderRadius.circular(SizeItems.smallRadius),
       ),
-      child: Text(
-        'Fikir Ver',
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: ColorItems.primaryText,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child: Text('Fikir Ver', style: Theme.of(context).textTheme.labelLarge),
     );
   }
 }
 
 class _DescriptionArea extends StatelessWidget {
-  const _DescriptionArea();
+  const _DescriptionArea({required this.controller});
+
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 160,
-      padding: const EdgeInsets.all(SizeItems.normalSpace),
+      padding: PaddingItems.card,
       decoration: BoxDecoration(
         color: ColorItems.cardBackground,
         borderRadius: BorderRadius.circular(SizeItems.normalRadius),
         border: Border.all(color: ColorItems.softBorder),
       ),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Modifikasyonunuzu tanımlayın',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: ColorItems.primaryText,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: SizeItems.normalSpace),
-              Text(
-                'Örneğin: Spor görünümlü, koyu renkli bir araba...',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: ColorItems.secondaryText,
-                ),
-              ),
-            ],
+          Text(
+            'Modifikasyonunuzu tanımlayın',
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-          const Positioned(right: 0, bottom: 0, child: _DescriptionIconArea()),
+          const SizedBox(height: SizeItems.smallSpace),
+          Expanded(
+            child: Stack(
+              children: [
+                TextField(
+                  key: const Key('customEditDescriptionField'),
+                  controller: controller,
+                  expands: true,
+                  maxLines: null,
+                  minLines: null,
+                  textAlignVertical: TextAlignVertical.top,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  decoration: InputDecoration(
+                    hintText:
+                        'Örneğin: Spor görünümlü, koyu renkli bir araba...',
+                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: ColorItems.secondaryText,
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.only(right: 48),
+                  ),
+                ),
+                const Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: _DescriptionIconArea(),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -524,13 +557,7 @@ class _SampleCarsArea extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Örnek Arabalar',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: ColorItems.primaryText,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        Text('Örnek Arabalar', style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: SizeItems.smallSpace),
         const _SampleCars(),
       ],
@@ -562,12 +589,7 @@ class _OptionBox extends StatelessWidget {
         style: TextButton.styleFrom(padding: EdgeInsets.zero),
         child: Row(
           children: [
-            Text(
-              title,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: ColorItems.primaryText),
-            ),
+            Text(title, style: Theme.of(context).textTheme.bodySmall),
             const Spacer(),
             Icon(
               icon,
@@ -644,13 +666,7 @@ class _ModifyCarArea extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: ColorItems.primaryText,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text(title, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(width: SizeItems.normalSpace),
           const Icon(
             Icons.auto_awesome,
@@ -816,6 +832,8 @@ class _ColorOptionsPanelState extends State<_ColorOptionsPanel> {
   int _categoryIndex = 0;
 
   void _updateCategory(int index) {
+    if (_categoryIndex == index) return;
+
     setState(() {
       _categoryIndex = index;
     });
@@ -874,7 +892,7 @@ class _OptionsPanelFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 430,
-      padding: const EdgeInsets.all(SizeItems.normalSpace),
+      padding: PaddingItems.card,
       decoration: BoxDecoration(
         color: ColorItems.cardBackground,
         borderRadius: const BorderRadius.only(
@@ -885,13 +903,7 @@ class _OptionsPanelFrame extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: ColorItems.primaryText,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text(title, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: SizeItems.smallSpace),
           Container(width: 90, height: 3, color: ColorItems.primaryBlue),
           const SizedBox(height: SizeItems.normalSpace),
@@ -925,12 +937,7 @@ class _MockOptionCard extends StatelessWidget {
             size: 36,
           ),
           const SizedBox(height: SizeItems.normalSpace),
-          Text(
-            title,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: ColorItems.primaryText),
-          ),
+          Text(title, style: Theme.of(context).textTheme.bodyMedium),
           Text(
             'Mock',
             style: Theme.of(
@@ -953,13 +960,7 @@ class _MockPartSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: ColorItems.primaryText,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        Text(title, style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 4),
         const Row(
           children: [
@@ -1060,12 +1061,7 @@ class _ColorCategory extends StatelessWidget {
       child: SizedBox.expand(
         child: TextButton(
           onPressed: onPressed,
-          child: Text(
-            title,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: ColorItems.primaryText),
-          ),
+          child: Text(title, style: Theme.of(context).textTheme.bodySmall),
         ),
       ),
     );
@@ -1096,12 +1092,7 @@ class _MockColorRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: SizeItems.normalSpace),
-          Text(
-            title,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: ColorItems.primaryText),
-          ),
+          Text(title, style: Theme.of(context).textTheme.bodyMedium),
           const Spacer(),
           Container(
             width: 20,
@@ -1227,18 +1218,8 @@ class _NewBadge extends StatelessWidget {
   }
 }
 
-class ColorItems {
-  static const Color primaryText = Color(0xffF5F5F7);
-  static const Color secondaryText = Color(0xff7A7A80);
-  static const Color primaryBlue = Color(0xff03AEF5);
-  static const Color cardBackground = Color(0xff171717);
-  static const Color softBorder = Color(0xff353535);
-  static const Color passiveText = Color(0xff55555B);
-  static const Color badge = Color(0xffFF382F);
-  static const Color sampleColor = Color(0xff3D4248);
-}
-
 class PaddingItems {
+  static const EdgeInsets card = EdgeInsets.all(SizeItems.normalSpace);
   static const EdgeInsets pageHorizontal = EdgeInsets.symmetric(horizontal: 12);
 }
 
