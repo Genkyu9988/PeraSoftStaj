@@ -1,0 +1,34 @@
+import 'dart:convert';
+import 'app_selections.dart';
+import 'shared_manager.dart';
+
+class SelectionCacheManager {
+  SelectionCacheManager(this.sharedManager);
+  final SharedManager sharedManager;
+  Future<void> _pendingSave = Future.value();
+
+  Future<AppSelections> load() async {
+    final text = await sharedManager.getString(SharedKeys.selections);
+    if (text == null) return AppSelections();
+    final data = jsonDecode(text);
+    if (data is! Map<String, dynamic>) {
+      throw const FormatException('Geçersiz seçim kaydı');
+    }
+    return AppSelections.fromJson(data);
+  }
+
+  Future<bool> save(AppSelections selections) {
+    // Onay anındaki veriyi al; hızlı ardışık kayıtlar birbirini geçmesin.
+    final text = jsonEncode(selections.toJson());
+    final operation = _pendingSave.then((_) async {
+      try {
+        await sharedManager.saveString(SharedKeys.selections, text);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    });
+    _pendingSave = operation.then((_) {});
+    return operation;
+  }
+}

@@ -31,14 +31,16 @@ void main() {
     expect(textTheme.titleMedium?.fontWeight, FontWeight.bold);
   });
 
-  testWidgets('Aynı sekmeye basmak açık paneli kapatır', (tester) async {
+  testWidgets('Panelin dışına dokunmak paneli kapatır', (tester) async {
     _setPhoneSize(tester);
     await tester.pumpWidget(const MyApp());
     await _tap(tester, 'Renk');
-    await _tap(tester, 'Metalik');
-    await _tap(tester, 'Metalik');
+    await _tap(tester, 'Premium');
+    await _tap(tester, 'Premium');
     expect(find.text('Premium Kırmızı'), findsOneWidget);
-    await _tap(tester, 'Style Builder');
+    expect(find.text('Style Builder').hitTestable(), findsNothing);
+    await tester.tapAt(const Offset(12, 120));
+    await tester.pumpAndSettle();
     expect(find.text('Renk seçin'), findsNothing);
     expect(find.text('Stil'), findsOneWidget);
     await tester.pumpWidget(const SizedBox.shrink());
@@ -56,7 +58,7 @@ void main() {
       for (final name in ['Kırmızı', 'Mavi', 'Mor', 'Gri']) {
         expect(find.text(name), findsOneWidget);
       }
-      await _tap(tester, 'Metalik');
+      await _tap(tester, 'Premium');
       for (final name in ['Kırmızı', 'Mavi', 'Mor', 'Gri']) {
         expect(find.text('Premium $name'), findsOneWidget);
         expect(find.text(name), findsNothing);
@@ -96,7 +98,10 @@ void main() {
     _setPhoneSize(tester);
     await tester.pumpWidget(const MyApp());
 
-    await tester.drag(find.byType(PageView), const Offset(-350, 0));
+    await tester.drag(
+      find.byKey(const Key('generateModes')),
+      const Offset(-350, 0),
+    );
     await tester.pumpAndSettle();
     expect(find.text('Modifikasyonunuzu tanımlayın'), findsOneWidget);
 
@@ -139,11 +144,16 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Sekme değişince açık panel sıfırlanır', (tester) async {
+  testWidgets('Panel kapanmadan sekme değişmez ve iptal taslağı atar', (
+    tester,
+  ) async {
     _setPhoneSize(tester);
     await tester.pumpWidget(const MyApp());
     await _tap(tester, 'Renk');
     expect(find.text('Kırmızı'), findsOneWidget);
+    expect(find.text('Custom Edit').hitTestable(), findsNothing);
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
     await _tap(tester, 'Custom Edit');
     expect(find.text('Renk seçin'), findsNothing);
     await _tap(tester, 'Style Builder');

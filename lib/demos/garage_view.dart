@@ -1,0 +1,267 @@
+import 'package:flutter/material.dart';
+import 'package:perasoft_staj/product/color_items.dart';
+import 'package:perasoft_staj/product/garage_items.dart';
+import 'package:perasoft_staj/product/layout_items.dart';
+import 'package:perasoft_staj/product/mody_bottom_bar.dart';
+import 'package:perasoft_staj/product/mody_header.dart';
+
+class GarageView extends StatefulWidget {
+  const GarageView({super.key, this.showBottomBar = true});
+  final bool showBottomBar;
+
+  @override
+  State<GarageView> createState() => _GarageViewState();
+}
+
+class _GarageViewState extends State<GarageView> {
+  int _selectedIndex = 0;
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _updateIndex(int index) {
+    if (_selectedIndex == index) return;
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void _selectTab(int index) {
+    _updateIndex(index);
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 12),
+        child: Column(
+          children: [
+            const Padding(
+              padding: PaddingItems.pageHorizontal,
+              child: Row(
+                children: [
+                  Expanded(child: ModyHeader()),
+                  SizedBox(width: SizeItems.smallSpace),
+                  Icon(Icons.more_vert, color: ColorItems.primaryText),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                color: Colors.black,
+                child: Column(
+                  children: [
+                    const _GarageProfile(),
+                    Padding(
+                      padding: PaddingItems.pageHorizontal,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: _GarageTab(
+                              title: GarageItems.all,
+                              icon: Icons.grid_view_rounded,
+                              isSelected: _selectedIndex == 0,
+                              onPressed: () => _selectTab(0),
+                            ),
+                          ),
+                          Expanded(
+                            child: _GarageTab(
+                              title: GarageItems.modys,
+                              icon: Icons.directions_car,
+                              isSelected: _selectedIndex == 1,
+                              onPressed: () => _selectTab(1),
+                            ),
+                          ),
+                          Expanded(
+                            child: _GarageTab(
+                              title: GarageItems.videos,
+                              icon: Icons.video_library_outlined,
+                              isSelected: _selectedIndex == 2,
+                              onPressed: () => _selectTab(2),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: PageView(
+                        controller: _pageController,
+                        onPageChanged: _updateIndex,
+                        children: const [
+                          _EmptyGarage(message: GarageItems.emptyImages),
+                          _EmptyGarage(message: GarageItems.emptyImages),
+                          _EmptyGarage(message: GarageItems.emptyVideos),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (widget.showBottomBar) const ModyBottomBar(selectedIndex: 3),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _GarageProfile extends StatelessWidget {
+  const _GarageProfile();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: SizeItems.largeSpace),
+      child: Column(
+        children: [
+          Container(
+            key: const Key('garageAvatar'),
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: ColorItems.sampleColor,
+              border: Border.all(color: ColorItems.primaryBlue, width: 2),
+            ),
+          ),
+          const SizedBox(height: SizeItems.normalSpace),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                GarageItems.userName,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(width: SizeItems.smallSpace),
+              const Icon(Icons.edit, size: SizeItems.normalIcon),
+            ],
+          ),
+          const SizedBox(height: SizeItems.normalSpace),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _ProfileCount(title: GarageItems.modys),
+              SizedBox(width: 32),
+              _ProfileCount(title: GarageItems.videos),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProfileCount extends StatelessWidget {
+  const _ProfileCount({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(GarageItems.count, style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 4),
+        Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.bodyLarge?.copyWith(color: ColorItems.secondaryText),
+        ),
+      ],
+    );
+  }
+}
+
+class _GarageTab extends StatelessWidget {
+  const _GarageTab({
+    required this.title,
+    required this.icon,
+    required this.isSelected,
+    required this.onPressed,
+  });
+
+  final String title;
+  final IconData icon;
+  final bool isSelected;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isSelected
+        ? ColorItems.primaryText
+        : ColorItems.secondaryText;
+    return Column(
+      children: [
+        TextButton(
+          key: Key('garageTab$title'),
+          onPressed: onPressed,
+          style: TextButton.styleFrom(padding: EdgeInsets.zero),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: color, size: SizeItems.smallIcon),
+              const SizedBox(width: 4),
+              Flexible(
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: color),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          key: Key('garageUnderline$title'),
+          height: 3,
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+            color: isSelected ? ColorItems.primaryText : Colors.transparent,
+            borderRadius: BorderRadius.circular(SizeItems.smallRadius),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmptyGarage extends StatelessWidget {
+  const _EmptyGarage({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: PaddingItems.card,
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      ),
+    );
+  }
+}
