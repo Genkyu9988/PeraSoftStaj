@@ -21,6 +21,25 @@ ve menü kontrolleri yer tutucudur. Galeri/kamera, gerçek görseller, servis
 bağlantısı, üretim sonuçları ve yüklenme/hata/yeniden deneme akışları bu
 kilometre taşının kapsamı dışındadır.
 
+## Yerel araç ve parça görselleri
+
+Üret ekranındaki beş örnek araç ile Style Builder'ın altı Stil ve altı Ekstra
+seçeneği, `assets/images/` içindeki 12 yerel fotoğrafı kullanır. Beş örnek araç
+Stil görsellerini yeniden kullanır; yeni seçenek eklenmez. Örnek araçlar bu
+aşamada yalnızca önizlemedir; fotoğraf seçme/üretime gönderme henüz bağlı değildir.
+Galeri, kamera, Firebase ve AI bağlantısı eklenmemiştir.
+
+VB10 #4'teki `lib/101/image_learn.dart` (`6b43107`) içindeki `ImageItems` ve
+`PngImage` yaklaşımı esas alınmıştır: yollar `ImageItems` içinde merkezileştirilir,
+`ModyAssetImage` parametre alan bir StatelessWidget ile Image.asset gösterir.
+#4.2 ve #5'teki ortak bileşen yaklaşımı korunur. Görseller bozulursa alternatif
+ikon gösterilir; contain kullanımı araç/parçanın kırpılmasını önler.
+Stil/Ekstra Uygula, iptal ve cache davranışları değişmemiştir; diğer ekranların
+mock görselleri kapsam dışıdır. Üret modları ortak Örnek Arabalar widget'ını kullanır.
+
+Kaynak ve lisanslar `assets/IMAGE_CREDITS.txt` içindedir; uygulamada Örnek
+Arabalar başlığının yanındaki bilgi düğmesinden de okunabilir.
+
 ## Mevcut kapsam
 
 - Üret, Explore, AI Video ve Garaj ekranları ortak navigasyonla bağlıdır.
@@ -38,7 +57,7 @@ kilometre taşının kapsamı dışındadır.
 - `PageController` ve `TextEditingController`, `initState` içinde hazırlanır ve
   `dispose` içinde temizlenir.
 - Yapay zekâ veya başka bir API bağlantısı henüz yoktur.
-- Örnek araba görselleri yerine dairesel yer tutucular kullanılır.
+- Üret'te örnek arabalar yerel fotoğraflardır; diğer medya alanları mock kalır.
 - Hedef görünüm 390 x 844 boyutundaki telefon portresidir.
 
 ## Explore önizlemesi

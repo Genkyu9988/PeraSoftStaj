@@ -5,6 +5,9 @@ import 'package:perasoft_staj/product/form_validator.dart';
 import 'package:perasoft_staj/product/mody_text_form_field.dart';
 import 'package:perasoft_staj/product/cache/generate_selection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:perasoft_staj/product/image_items.dart';
+import 'package:perasoft_staj/product/mody_asset_image.dart';
 import 'package:perasoft_staj/product/color_items.dart';
 import 'package:perasoft_staj/product/layout_items.dart';
 import 'package:perasoft_staj/product/mody_header.dart';
@@ -144,6 +147,11 @@ class _ModyHomeViewState extends State<ModyHomeView> {
               );
             }
             return _SelectionOptionsPanel(
+              images: detail
+                  ? const {}
+                  : index == 1
+                  ? ImageItems.styleOptions
+                  : ImageItems.extraOptions,
               title: detail
                   ? 'Açı seçin'
                   : index == 1
@@ -699,12 +707,44 @@ class _OptionBoxes extends StatelessWidget {
 class _SampleCarsArea extends StatelessWidget {
   const _SampleCarsArea();
 
+  Future<void> _showCredits(BuildContext context) async {
+    final credits = await rootBundle.loadString(ImageItems.credits);
+    if (!context.mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Görsel kaynakları'),
+        content: SingleChildScrollView(child: SelectableText(credits)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Kapat'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Örnek Arabalar', style: Theme.of(context).textTheme.titleMedium),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Örnek Arabalar',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            IconButton(
+              tooltip: 'Görsel kaynakları',
+              onPressed: () => _showCredits(context),
+              icon: const Icon(Icons.info_outline, size: 18),
+            ),
+          ],
+        ),
         const SizedBox(height: SizeItems.smallSpace),
         const _SampleCars(),
       ],
@@ -781,16 +821,12 @@ class _SampleCars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       height: SizeItems.sampleCircleSize,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _SampleCircle(),
-          _SampleCircle(),
-          _SampleCircle(),
-          _SampleCircle(),
-          _SampleCircle(),
+          for (final path in ImageItems.sampleCars) _SampleCircle(path: path),
         ],
       ),
     );
@@ -798,11 +834,14 @@ class _SampleCars extends StatelessWidget {
 }
 
 class _SampleCircle extends StatelessWidget {
-  const _SampleCircle();
+  const _SampleCircle({required this.path});
+
+  final String path;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.antiAlias,
       width: SizeItems.sampleCircleSize,
       height: SizeItems.sampleCircleSize,
       decoration: BoxDecoration(
@@ -810,6 +849,7 @@ class _SampleCircle extends StatelessWidget {
         borderRadius: BorderRadius.circular(SizeItems.sampleCircleSize),
         border: Border.all(color: ColorItems.softBorder),
       ),
+      child: ModyAssetImage(path: path, semanticLabel: 'Örnek araç'),
     );
   }
 }
@@ -854,6 +894,7 @@ class _SelectionOptionsPanel extends StatelessWidget {
     required this.options,
     required this.selectedTitle,
     required this.onSelected,
+    this.images = const {},
     this.showApply = false,
     this.onApply,
   });
@@ -862,6 +903,7 @@ class _SelectionOptionsPanel extends StatelessWidget {
   final List<String> options;
   final String selectedTitle;
   final void Function(String) onSelected;
+  final Map<String, String> images;
   final bool showApply;
   final VoidCallback? onApply;
 
@@ -882,7 +924,7 @@ class _SelectionOptionsPanel extends StatelessWidget {
           child: TextButton(
             onPressed: () => onSelected(name),
             style: TextButton.styleFrom(padding: EdgeInsets.zero),
-            child: _MockOptionCard(title: name),
+            child: _SelectionOptionCard(title: name, imagePath: images[name]),
           ),
         ),
       ),
@@ -997,44 +1039,70 @@ class _AdjustmentOptionsPanel extends StatelessWidget {
   }
 }
 
-class _MockOptionCard extends StatelessWidget {
-  const _MockOptionCard({required this.title});
+class _SelectionOptionCard extends StatelessWidget {
+  const _SelectionOptionCard({required this.title, this.imagePath});
 
   final String title;
+  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 128,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: ColorItems.sampleColor,
         borderRadius: BorderRadius.circular(SizeItems.normalRadius),
         border: Border.all(color: ColorItems.softBorder),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.directions_car_outlined,
-            color: ColorItems.secondaryText,
-            size: 36,
-          ),
-          const SizedBox(height: SizeItems.normalSpace),
-          Text(
-            title,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          Text(
-            'Mock',
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: ColorItems.secondaryText),
-          ),
-        ],
-      ),
+      child: imagePath != null
+          ? Column(
+              children: [
+                Expanded(
+                  child: ModyAssetImage(
+                    path: imagePath!,
+                    width: double.infinity,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 6,
+                  ),
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.directions_car_outlined,
+                  color: ColorItems.secondaryText,
+                  size: 36,
+                ),
+                const SizedBox(height: SizeItems.normalSpace),
+                Text(
+                  title,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                Text(
+                  'Mock',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: ColorItems.secondaryText,
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

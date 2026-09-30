@@ -1,0 +1,65 @@
+GÖRSEL KAYNAKLARI / IMAGE CREDITS
+
+Source: Wikimedia Commons. Downloaded 2026-09-30.
+Images are illustrative option previews, not promised AI results or endorsements.
+Commons-provided resized thumbnails are bundled; no retouching was performed.
+Flutter fits the photos inside cards. The image licenses below apply to the
+images independently of the application code. Retain this attribution on reuse.
+
+classic.jpg — 1967 Ford Mustang hardtop, front right, 08-25-2024
+Author: MercurySable99 — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=151814185
+https://creativecommons.org/licenses/by-sa/4.0/
+
+sport.jpg — 2013 Porsche 911 Carrera 4S (991) (9626546987)
+Author: David Villarreal Fernández — CC BY-SA 2.0
+https://commons.wikimedia.org/w/index.php?curid=29171275
+https://creativecommons.org/licenses/by-sa/2.0/
+
+off_road.jpg — Jeep Wrangler off-road
+Author: Oleg Yunakov — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=162063506
+https://creativecommons.org/licenses/by-sa/4.0/
+
+suv.jpg — BMW iX5 Hydrogen IAA 2023 1X7A0718
+Author: Alexander-93 — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=137128306
+https://creativecommons.org/licenses/by-sa/4.0/
+
+race.jpg — Porsche race car Verschuur amk
+Author: AngMoKio — CC BY-SA 2.5
+https://commons.wikimedia.org/w/index.php?curid=3906381
+https://creativecommons.org/licenses/by-sa/2.5/
+
+city.jpg — 0 Fiat 500 - Rome
+Author: Jean-Pol GRANDMONT — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=16902129
+https://creativecommons.org/licenses/by-sa/3.0/
+
+rim.jpg — Jaguar XJ Dynamic (8x18 inch) alloy wheel (2)
+Author: Magnus Bäck — Public domain
+https://commons.wikimedia.org/w/index.php?curid=6950163
+
+spoiler.jpg — BMW M8 GTE race car rear spoiler carbon
+Author: Strubbl — CC0 1.0
+https://commons.wikimedia.org/w/index.php?curid=115437771
+https://creativecommons.org/publicdomain/zero/1.0/
+
+paint.jpg — Custom Paint (8541384751)
+Author: Damian Gadal — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=74296385
+https://creativecommons.org/licenses/by/2.0/
+
+neon.jpg — Underglow lights (50119561488)
+Author: Zach Catanzareti Photo — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=92369959
+https://creativecommons.org/licenses/by/2.0/
+
+hood.jpg — 1969 AMC SC-Rambler md-D4
+Author: CZmarlin / Christopher Ziemnowicz — Public domain
+https://commons.wikimedia.org/w/index.php?curid=17865506
+
+body_kit.jpg — BMW M2 M-Performance, Frankfurt (1Y7A3532)
+Author: Matti Blume — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=62523369
+https://creativecommons.org/licenses/by-sa/4.0/
