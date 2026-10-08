@@ -8,6 +8,7 @@ abstract class EditorGenerationCubit
   EditorGenerationCubit({
     required super.generationService,
     super.generationTimeout,
+    super.onCompleted,
   }) : super(initialState: const GenerationActivity.idle());
 
   @override

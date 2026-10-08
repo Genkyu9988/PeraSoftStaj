@@ -4,6 +4,47 @@ Bu proje, Mody AI uygulamasının ana ekranından esinlenilen bir Flutter arayü
 çalışmasıdır. Dart ve Flutter konuları staj süresince bu proje üzerinde
 uygulanır.
 
+## Demo geçmişi ve stil seçimi — 9 Ekim 2026
+
+Your Creations/Garaj geçmişi ve Stil → Uygula görsel düzeltmesi birlikte
+doğrulandı. Stil kartını uygulamak artık hem stili hem karttaki örnek aracı
+seçer; boş/dolu kaynakta çalışır. Paneli kapatma iptal eder, ekstra/renk korunur.
+
+Kullanıcı yeniden açılışta geçmişin korunmasını, iptal edilen işlemde kayıt
+eklenmemesini, hata → tekrar dene sonrasında yalnız bir video kaydı oluşmasını
+ve Garaj detayından dönüşte sayaçların değişmemesini doğruladı. Ekran
+görüntülerinde video denemesi öncesi 4 Mody's / 1 video, sonrası 4 / 2 görüldü.
+
+9 Ekim gönderim öncesi kontrol: **863 test başarılı**, statik analiz temiz,
+Android debug APK derlemesi başarılı. Değişen 23 Dart dosyası biçim
+kontrolünden değişiklik gerektirmeden geçti.
+
+- [Son doğrulama, kanıt türleri ve kapsam sınırları](docs/demo_release_verification.md)
+- [Stil kartı → araç eşlemesi ve regresyon testleri](docs/style_vehicle_selection.md)
+- [Ders/transkript/GitHub kaynaklarının kod karşılıkları](docs/learning_sources.md)
+
+Gerçek AI, sunucu, galeri/kamera veya video oynatma eklenmedi. Aşağıdaki
+test sayıları ve kapsam açıklamaları ilgili aşamaların tarihli kayıtlarıdır.
+
+## Your Creations ve Garaj — 8 Ekim 2026
+
+Üret'in üç modu, Explore ve AI Video'nun başarılı demo işlemleri ortak
+geçmişe kaydedilir. Your Creations'tan orijinal araç yeniden seçilebilir;
+Garaj listeleri, filtreleri ve profil sayaçları aynı kaynaktan güncellenir.
+Geçmiş uygulama yeniden açılınca yüklenir. İptal/hata kaydedilmez;
+sonuca tekrar bakmak yeni kayıt oluşturmaz. Video kartları oynatılabilir
+video değil, açıkça işaretlenmiş video-demo kayıtlarıdır.
+
+Temelden Zirveye #12'nin video/transkript/repo örnekleri kullanılarak
+model–cache–arayüz ayrımı korundu; Hive veya başka paket eklenmedi.
+[Davranış, kayıt/hata politikası, kaynak eşlemesi ve testler](docs/creation_history.md).
+
+**836 test başarılı**, statik analiz temiz, Android debug APK derlendi.
+Emülatörde üretim → Garaj ve uygulama yeniden açılışında kayıt kontrol edildi.
+
+Çalıştırma: `flutter run`. Demo hata/tekrar deneme:
+`flutter run --dart-define=MODY_DEMO_FAIL_FIRST=true`.
+
 ## AI API öncesi doğrulama — 8 Ekim 2026
 
 Küçük ekran ve büyük yazıda seçim kutuları, alt menü, renk panelleri ve

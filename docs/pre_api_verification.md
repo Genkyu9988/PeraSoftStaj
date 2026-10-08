@@ -2,6 +2,10 @@
 
 Tarih: 8 Ekim 2026. Gerçek AI servisi veya yeni özellik eklenmedi.
 
+Bu belge responsive doğrulama aşamasının tarihli kaydıdır. Sonradan eklenen
+Your Creations/Garaj, stil görseli düzeltmesi ve kullanıcının manuel
+sonuçları için [9 Ekim son doğrulama notuna](demo_release_verification.md) bakın.
+
 ## Düzeltilenler
 
 - Üret seçim kutularındaki sabit 88 piksel yükseklik, büyük yazıda taşmaya

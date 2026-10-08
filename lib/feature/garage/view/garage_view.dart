@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:perasoft_staj/feature/creations/view_model/creation_history_cubit.dart';
+import 'package:perasoft_staj/feature/creations/view/widget/creation_grid.dart';
+import 'package:perasoft_staj/feature/creations/view/widget/history_persistence_notice.dart';
+import 'package:perasoft_staj/feature/generation/view/generation_result_view.dart';
+import 'package:perasoft_staj/product/model/creation_record.dart';
+import 'package:perasoft_staj/product/navigation/navigation_helper.dart';
 import 'package:perasoft_staj/product/init/theme/color_items.dart';
 import 'package:perasoft_staj/feature/garage/data/garage_items.dart';
 import 'package:perasoft_staj/product/constants/layout_items.dart';
@@ -47,6 +54,12 @@ class _GarageViewState extends State<GarageView> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<CreationHistoryCubit, CreationHistoryState>(
+      builder: (context, history) => _build(context, history),
+    );
+  }
+
+  Widget _build(BuildContext context, CreationHistoryState history) {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 12),
@@ -70,7 +83,11 @@ class _GarageViewState extends State<GarageView> {
                     SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          const _GarageProfile(),
+                          _GarageProfile(
+                            images: history.images.length,
+                            videos: history.videos.length,
+                          ),
+                          const HistoryPersistenceNotice(),
                           Padding(
                             padding: PaddingItems.pageHorizontal,
                             child: Row(
@@ -109,10 +126,10 @@ class _GarageViewState extends State<GarageView> {
                   body: PageView(
                     controller: _pageController,
                     onPageChanged: _updateIndex,
-                    children: const [
-                      _EmptyGarage(message: GarageItems.emptyImages),
-                      _EmptyGarage(message: GarageItems.emptyImages),
-                      _EmptyGarage(message: GarageItems.emptyVideos),
+                    children: [
+                      _historyPage(history.records, GarageItems.emptyImages),
+                      _historyPage(history.images, GarageItems.emptyImages),
+                      _historyPage(history.videos, GarageItems.emptyVideos),
                     ],
                   ),
                 ),
@@ -124,10 +141,22 @@ class _GarageViewState extends State<GarageView> {
       ),
     );
   }
+
+  Widget _historyPage(List<CreationRecord> records, String emptyMessage) =>
+      CreationGrid(
+        records: records,
+        emptyMessage: emptyMessage,
+        onSelected: (record) => openPage<void>(
+          context,
+          GenerationResultView(result: record.result, fromHistory: true),
+        ),
+      );
 }
 
 class _GarageProfile extends StatelessWidget {
-  const _GarageProfile();
+  const _GarageProfile({required this.images, required this.videos});
+  final int images;
+  final int videos;
 
   @override
   Widget build(BuildContext context) {
@@ -161,14 +190,26 @@ class _GarageProfile extends StatelessWidget {
             ],
           ),
           const SizedBox(height: SizeItems.normalSpace),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(child: _ProfileCount(title: GarageItems.modys)),
-              SizedBox(width: 32),
-              Expanded(child: _ProfileCount(title: GarageItems.videos)),
+              Expanded(
+                child: _ProfileCount(title: GarageItems.modys, count: images),
+              ),
+              const SizedBox(width: 32),
+              Expanded(
+                child: _ProfileCount(title: GarageItems.videos, count: videos),
+              ),
             ],
           ),
+          if (images + videos > 0)
+            const Padding(
+              padding: EdgeInsets.all(8),
+              child: Text(
+                'Demo işlem sayıları • Gerçek görsel/video üretilmedi',
+                textAlign: TextAlign.center,
+              ),
+            ),
         ],
       ),
     );
@@ -176,15 +217,20 @@ class _GarageProfile extends StatelessWidget {
 }
 
 class _ProfileCount extends StatelessWidget {
-  const _ProfileCount({required this.title});
+  const _ProfileCount({required this.title, required this.count});
 
   final String title;
+  final int count;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(GarageItems.count, style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          '$count',
+          key: ValueKey('creation-count-$title'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         const SizedBox(height: 4),
         Text(
           title,
@@ -250,28 +296,6 @@ class _GarageTab extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _EmptyGarage extends StatelessWidget {
-  const _EmptyGarage({required this.message});
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: PaddingItems.card,
-          child: Text(
-            message,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-        ),
-      ),
     );
   }
 }

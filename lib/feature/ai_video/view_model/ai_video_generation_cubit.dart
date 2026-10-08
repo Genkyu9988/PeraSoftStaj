@@ -11,6 +11,7 @@ final class AiVideoGenerationCubit extends EditorGenerationCubit {
   AiVideoGenerationCubit({
     required super.generationService,
     super.generationTimeout,
+    super.onCompleted,
     ExploreValidator validator = const ExploreValidator(),
   }) : _validator = validator;
 

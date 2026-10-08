@@ -10,6 +10,7 @@ final class ExploreGenerationCubit extends EditorGenerationCubit {
   ExploreGenerationCubit({
     required super.generationService,
     super.generationTimeout,
+    super.onCompleted,
     ExploreValidator validator = const ExploreValidator(),
   }) : _validator = validator;
   final ExploreValidator _validator;

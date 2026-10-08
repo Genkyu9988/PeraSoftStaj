@@ -11,6 +11,16 @@ class GenerateOptionCatalog {
     'Yarış',
     'Şehir',
   ];
+  // A confirmed manual style card also selects its displayed sample vehicle.
+  // Keep stable catalog IDs, not translated car labels or sample-list indices.
+  static const styleVehicleIds = {
+    'Klasik': 'mustang_classic',
+    'Sportif': 'porsche_911',
+    'Off Road': 'jeep_wrangler',
+    'SUV': 'bmw_ix5',
+    'Yarış': 'porsche_race',
+    'Şehir': 'fiat_500',
+  };
   static const extras = [
     'Jant',
     'Spoiler',

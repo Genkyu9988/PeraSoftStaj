@@ -1,6 +1,7 @@
 import 'package:perasoft_staj/product/catalog/car_mod_option.dart';
 import 'package:perasoft_staj/product/catalog/reference_car_catalog.dart';
 import 'package:flutter/material.dart';
+import 'package:perasoft_staj/feature/creations/view/widget/history_persistence_notice.dart';
 import 'package:perasoft_staj/product/catalog/vehicle_catalog.dart';
 import 'package:perasoft_staj/product/init/theme/color_items.dart';
 import 'package:perasoft_staj/product/model/generation_request.dart';
@@ -9,8 +10,13 @@ import 'package:perasoft_staj/product/widget/mody_action_button.dart';
 import 'package:perasoft_staj/product/widget/mody_asset_image.dart';
 
 class GenerationResultView extends StatelessWidget {
-  const GenerationResultView({super.key, required this.result});
+  const GenerationResultView({
+    super.key,
+    required this.result,
+    this.fromHistory = false,
+  });
   final GenerationResult result;
+  final bool fromHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +39,7 @@ class GenerationResultView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const HistoryPersistenceNotice(),
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
@@ -90,7 +97,7 @@ class GenerationResultView extends StatelessWidget {
                     ),
                   const SizedBox(height: 24),
                   ModyActionButton(
-                    title: 'Seçimlere Dön',
+                    title: fromHistory ? 'Garaja Dön' : 'Seçimlere Dön',
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],

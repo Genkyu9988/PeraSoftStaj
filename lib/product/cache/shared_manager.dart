@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum SharedKeys { selections }
+enum SharedKeys { selections, creations }
 
 // Eğitmenin SharedManager örneği: cihazdaki kayıt işlemleri tek yerde.
 class SharedManager {

@@ -97,6 +97,9 @@ void main() {
       await render(tester, home: const MainTabsView());
       final cubit = _cubit(tester);
       cubit.selectStyle('Klasik');
+      // Manual style now selects its sample car; explicitly clear it to keep
+      // this test exercising the pending missing-vehicle warning.
+      cubit.selectVehicle('');
       await tester.pumpAndSettle();
       cubit.submit(GenerateMode.styleBuilder);
       tester.widget<ModyBottomBar>(find.byType(ModyBottomBar)).onSelected!(1);

@@ -5,6 +5,7 @@ import 'package:perasoft_staj/feature/generate/logic/generate_suggestions.dart';
 import 'package:perasoft_staj/feature/generate/view_model/state/generate_state.dart';
 import 'package:perasoft_staj/product/catalog/detail_part_catalog.dart';
 import 'package:perasoft_staj/product/catalog/vehicle_catalog.dart';
+import 'package:perasoft_staj/product/catalog/generate_option_catalog.dart';
 import 'package:perasoft_staj/product/model/generate_selection.dart';
 import 'package:perasoft_staj/product/validation/generate_validator.dart';
 
@@ -15,6 +16,7 @@ final class GenerateCubit extends GenerationFlowCubit<GenerateState> {
     required GenerateSuggestions suggestions,
     required super.generationService,
     super.generationTimeout,
+    super.onCompleted,
     GenerateValidator validator = const GenerateValidator(),
     void Function(GenerateSelection)? onApplied,
   }) : _suggestions = suggestions,
@@ -36,7 +38,13 @@ final class GenerateCubit extends GenerationFlowCubit<GenerateState> {
   void selectVehicle(String id) =>
       _apply(state.copyWith(vehicleId: VehicleCatalog.restoreId(id)));
 
-  void selectStyle(String style) => _apply(state.copyWith(style: style));
+  void selectStyle(String style) {
+    final vehicleId = GenerateOptionCatalog.styleVehicleIds[style];
+    if (vehicleId == null) return;
+    // Apply style + displayed sample atomically. Draft taps never reach here;
+    // extras/colors stay intact, and persistence receives only one snapshot.
+    _apply(state.copyWith(style: style, vehicleId: vehicleId));
+  }
 
   void selectExtra(String extra) => _apply(state.copyWith(extra: extra));
 

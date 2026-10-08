@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:perasoft_staj/feature/creations/view_model/creation_history_cubit.dart';
 import 'package:perasoft_staj/feature/generate/view/generation_result_view.dart';
 import 'package:perasoft_staj/feature/generate/view/widget/generation_overlay.dart';
 import 'package:perasoft_staj/feature/generate/view_model/state/generation_activity.dart';
@@ -68,6 +69,8 @@ class _ModyHomeViewState extends State<ModyHomeView> {
     generationService:
         widget.generationService ?? createDemoGenerationService(),
     onApplied: (selection) => widget.onApplied?.call(selection),
+    onCompleted: (result) =>
+        context.read<CreationHistoryCubit?>()?.record(result),
   );
 
   void _submit(GenerateMode mode) {

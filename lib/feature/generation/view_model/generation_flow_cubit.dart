@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perasoft_staj/feature/generation/view_model/generation_activity.dart';
 import 'package:perasoft_staj/product/model/generation_request.dart';
+import 'package:perasoft_staj/product/model/generation_result.dart';
 import 'package:perasoft_staj/product/service/generation/generation_service.dart';
 
 /// Shared request lifecycle, independent of choices, storage and UI context.
@@ -12,11 +13,14 @@ abstract class GenerationFlowCubit<S> extends Cubit<S> {
     required S initialState,
     required GenerationService generationService,
     Duration generationTimeout = const Duration(seconds: 20),
+    void Function(GenerationResult)? onCompleted,
   }) : _service = generationService,
        _timeout = generationTimeout,
+       _onCompleted = onCompleted,
        super(initialState);
   final GenerationService _service;
   final Duration _timeout;
+  final void Function(GenerationResult)? _onCompleted;
   int _attemptSequence = 0;
   GenerationActivity get activity;
   @protected
@@ -42,6 +46,8 @@ abstract class GenerationFlowCubit<S> extends Cubit<S> {
       if (result.request != request) {
         throw const GenerationException(GenerationFailureKind.unavailable);
       }
+      // One accepted completion, before any navigation/listener can consume it.
+      _onCompleted?.call(result);
       emitActivity(GenerationActivity.success(id, result));
     } on TimeoutException {
       _fail(id, request, GenerationFailureKind.timeout);

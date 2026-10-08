@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:perasoft_staj/feature/creations/view_model/creation_history_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:perasoft_staj/feature/ai_video/view_model/ai_video_generation_cubit.dart';
 import 'package:perasoft_staj/feature/editor/view_model/editor_generation_cubit.dart';
@@ -71,10 +72,14 @@ class _ExploreDetailViewState extends State<ExploreDetailView> {
   // This editor owns/closes its Cubit; the service is supplied at the UI edge.
   late final EditorGenerationCubit _generation = widget.isVideo
       ? AiVideoGenerationCubit(
+          onCompleted: (result) =>
+              context.read<CreationHistoryCubit?>()?.record(result),
           generationService:
               widget.generationService ?? createDemoGenerationService(),
         )
       : ExploreGenerationCubit(
+          onCompleted: (result) =>
+              context.read<CreationHistoryCubit?>()?.record(result),
           generationService:
               widget.generationService ?? createDemoGenerationService(),
         );

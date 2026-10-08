@@ -1,6 +1,6 @@
 # Yararlanılan dersler ve projeye uyarlama
 
-Tarih: 8 Ekim 2026. Bu not, mevcut frontend/demo sürümünün öğretim
+Güncelleme: 9 Ekim 2026. Bu not, mevcut frontend/demo sürümünün öğretim
 kaynaklarını ve kaynaklardan alınan yöntemlerin kod karşılıklarını açıklar.
 
 ## İnceleme yöntemi
@@ -9,7 +9,7 @@ Kullanıcının sağladığı transkriptler, indirilen videoların ilgili zaman
 damgalı kod kareleri ve öğretmenin GitHub dosyaları birlikte karşılaştırıldı.
 Tüm videoların baştan sona kesintisiz sesli izlendiği iddia edilmez.
 Temelden Zirveye 4/4.2/5 için transkript ve repo kodundan yararlanıldı;
-9/18/19 ve Mimari v2 8/11/13 için indirilen video dosyaları da mevcuttu.
+9/12/18/19 ve Mimari v2 8/11/13 için indirilen video dosyaları da mevcuttu.
 Videoların ara kod aşamaları reponun tamamlanmış sürümüyle birebir aynı
 kabul edilmedi. MP4 ve transkript dosyaları bu repoya yüklenmedi.
 
@@ -19,6 +19,7 @@ kabul edilmedi. MP4 ve transkript dosyaları bu repoya yüklenmedi.
 | --- | --- | --- |
 | Temelden Zirveye 4 / 4.2 / 5 — widget oluşturma | Küçük, parametreli `StatelessWidget`; veriyi ve callback'i dışarıdan alma | `GenerateOptionBoxes`, `GenerationPanel`, ortak seçim ve eylem bileşenleri. Sunum bileşeni servis çağırmaz veya cache'e yazmaz. |
 | [Temelden Zirveye 9 — servis/Future/hata yönetimi](https://www.youtube.com/watch?v=laSlXorExj4) | Model, servis sözleşmesi, `Future/await`, `try/catch`, yüklenme durumu | `GenerationService`, `FakeGenerationService`, tipli istek/sonuç ve kullanıcıya güvenli hata mesajları. Sonraki girdi–sonuç hazırlığında saf `GenerationInputResolver`. |
+| [Temelden Zirveye 12 — cache/model](https://www.youtube.com/watch?v=_v7m71TXFww) | Ortak kayıt yöneticisi, modele özel sınıf, constructor bağımlılığı, JSON dönüşümü ve asenkron hazırlık | `CreationRecord`, `CreationRepository`, `CreationCacheManager`; seçim kaydından ayrı demo geçmişi. 12 video karesi/transkript/repo karşılaştırması; [özellik ve test notu](creation_history.md). |
 | [Temelden Zirveye 18 — test edilebilirlik](https://www.youtube.com/watch?v=MBOrcEErqPw) | Bağımlılığı constructor'dan almak; testte hazır model döndüren servis kullanmak | Servis Cubit'e dışarıdan verilir. `ControlledGenerationService` başarı/hata zamanını testin kontrol etmesini sağlar; gerçek ağ veya yapay uzun bekleme gerekmez. Picker/Vexana eklemek zorunlu kabul edilmedi. |
 | [Temelden Zirveye 19 — BLoC/Cubit](https://www.youtube.com/watch?v=euw6Np2Z9n4) | State, `copyWith`, `BlocSelector`, listener ile yan etki | Üret seçimleri ve ortak üretim durumları ayrıldı. Buton/panel gerektiği kadar dinler; sonuç navigasyonu `build` içinde yapılmaz. |
 | [Mimari v2 8 — responsive ve özel widget](https://www.youtube.com/watch?v=GizG5X3gfsQ) | 30–34. dakika: ortak uyarlama bileşenleri; 46–47 ve 52:55–53:42: kullanılabilir alan ve esnek yerleşim; 54–57: açık parametreli dialog | Sabit yükseklik yüzünden taşan kutu/alt menü/renk satırları içerikle büyür. Kısa seçim panelleri gerektiğinde kayar. Üret ve Garaj üst içeriği dar alanda formu sıkıştırmaz. Yeni responsive paketi eklenmedi. |
@@ -64,6 +65,28 @@ Mimari v2 8'in 52:20–52:27 bölümündeki önizlemeye tek başına güvenmeme
 uyarısına uygun olarak widget testleri ile Android emülatör kontrolü ayrı
 raporlanır. Emülatör kontrolü fiziksel Android/iOS cihaz testi değildir.
 
-Gerçek AI API, sağlayıcı seçimi, backend, galeri/kamera, video oynatma veya
-Garaj'a kayıt bu değişikliklerin parçası değildir. Demo sonuçlar yalnızca
-seçilen orijinal fotoğrafı gösterir.
+Gerçek AI API, sağlayıcı seçimi, backend, galeri/kamera ve video oynatma
+eklenmedi. Sonraki demo geçmişi adımıyla Your Creations ve Garaj'a yerel
+kayıt eklendi. Demo sonuçlar hâlâ seçilen orijinal fotoğrafı gösterir.
+
+## Bu gönderimdeki somut uyarlamalar
+
+- **Temelden Zirveye #12:** `SharedManager` ortak depolama erişimini,
+  `CreationCacheManager` geçmişe özel model/JSON dönüşümünü üstlenir.
+  `CreationRepository` dışarıdan verilir; testler bellekte, uygulama cihaz
+  kaydında çalışır. Seçimler ile geçmiş ayrı anahtarlarda tutulur.
+- **#9/#18, #19 ve Mimari v2 #11:** Servis sonucu tek bir kabul edilmiş
+  tamamlanma bildirimiyle `CreationHistoryCubit`'e gider. Kartlar kayıt
+  oluşturmaz; navigasyon, hata ve iptal başarı sayılmaz. Stil ve araç
+  `GenerateCubit` içinde tek state/cache bildirimiyle güncellenir.
+- **#4/4.2/#5 ve Mimari v2 #8:** Ortak `CreationGrid` veri ve callback alır;
+  büyük yazıda tek sütuna geçer. Your Creations ve Garaj aynı geçmişi sunar.
+- **Mimari v2 #13:** Geçmiş için 91, stil–araç eşlemesi için 27 test;
+  model/cache/state ve gerçek widget etkileşimleri ayrı sınanır. Kontrol
+  edilen senaryoların ve manuel teyitlerin sınırı
+  [son doğrulama notunda](demo_release_verification.md) belirtilir.
+
+Stil kartının fotoğrafını kaynak araç olarak seçme kuralı kullanıcı isteğine
+dayanır; öğretmenin hazır ürün kuralı olarak sunulmaz. Bu not güncellemesi
+için videolar yeniden incelenmedi; daha önce belgelenmiş kaynak kullanımının
+bu değişikliklerle ilişkisi açıklandı.
