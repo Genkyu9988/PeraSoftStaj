@@ -108,6 +108,9 @@ void main() {
     );
 
     await tapText(tester, 'Detail Edit');
+    await tapText(tester, 'Açı');
+    await tapText(tester, 'Front');
+    await tapText(tester, 'Uygula');
     await tapText(tester, 'Renk');
     expect(selected(tester, 'colorMor'), isFalse);
     await closePanel(tester);

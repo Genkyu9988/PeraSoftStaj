@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'app_selections.dart';
+import 'package:perasoft_staj/product/model/app_selections.dart';
 import 'shared_manager.dart';
 
 class SelectionCacheManager {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:perasoft_staj/main.dart';
-import 'package:perasoft_staj/demos/explore_detail_view.dart';
-import 'package:perasoft_staj/product/mody_action_button.dart';
+import 'package:perasoft_staj/feature/editor/view/explore_detail_view.dart';
+import 'package:perasoft_staj/product/widget/mody_action_button.dart';
+import 'package:perasoft_staj/product/validation/explore_validation_messages.dart';
 
 void main() {
   for (final appearance in ModyButtonAppearance.values) {
@@ -74,7 +75,10 @@ void main() {
         await tester.pumpAndSettle();
       }
 
-      expect(enabled(), isFalse);
+      expect(enabled(), isTrue);
+      await tester.tap(action);
+      await tester.pumpAndSettle();
+      expect(find.text(ExploreValidationMessages.image), findsOneWidget);
       await tap('Resim Seçin');
       expect(
         tester
@@ -84,15 +88,21 @@ void main() {
             .onPressed,
         isNull,
       );
-      await tap('Mock Araç 1');
+      await tap('Klasik Mustang');
       await tester.binding.handlePopRoute();
       await tester.pumpAndSettle();
-      expect(enabled(), isFalse);
+      expect(enabled(), isTrue);
+      await tester.tap(action);
+      await tester.pumpAndSettle();
+      expect(find.text(ExploreValidationMessages.image), findsOneWidget);
       await tap('Resim Seçin');
-      await tap('Mock Araç 1');
+      await tap('Klasik Mustang');
       await tap('Uygula');
-      expect(enabled(), video);
+      expect(enabled(), isTrue);
       if (!video) {
+        await tester.tap(action);
+        await tester.pumpAndSettle();
+        expect(find.text(ExploreValidationMessages.color), findsOneWidget);
         await tap('Renk');
         await tap('Mavi');
         await tap('Uygula');
@@ -100,14 +110,7 @@ void main() {
       expect(enabled(), isTrue);
       await tester.tap(action);
       await tester.pumpAndSettle();
-      expect(
-        find.text(
-          video
-              ? 'Bu bir mock önizlemedir; gerçek video üretilmez.'
-              : 'Bu bir mock önizlemedir; gerçek görsel üretilmez.',
-        ),
-        findsOneWidget,
-      );
+      expect(find.text('Demo sonuç — AI ile üretilmedi'), findsOneWidget);
     });
   }
 }

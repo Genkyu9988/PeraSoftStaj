@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:perasoft_staj/main.dart';
-import 'package:perasoft_staj/demos/selection_loader.dart';
-import 'package:perasoft_staj/demos/main_tabs_view.dart';
-import 'package:perasoft_staj/product/cache/app_selections.dart';
-import 'package:perasoft_staj/product/cache/generate_selection.dart';
+import 'package:perasoft_staj/product/init/selection_loader.dart';
+import 'package:perasoft_staj/feature/shell/view/main_tabs_view.dart';
+import 'package:perasoft_staj/product/model/app_selections.dart';
+import 'package:perasoft_staj/product/model/generate_selection.dart';
 import 'package:perasoft_staj/product/cache/selection_cache_manager.dart';
 import 'package:perasoft_staj/product/cache/shared_manager.dart';
-import 'package:perasoft_staj/product/explore_selection.dart';
+import 'package:perasoft_staj/product/model/explore_selection.dart';
+import 'package:perasoft_staj/product/catalog/car_mod_option.dart';
+import 'package:perasoft_staj/product/catalog/detail_part_catalog.dart';
 
 class MemorySharedManager extends SharedManager {
   String? value;
@@ -24,10 +26,58 @@ class MemorySharedManager extends SharedManager {
 }
 
 void main() {
+  for (final angle in DetailPartCatalog.byAngle.keys) {
+    test(
+      '$angle parts survive a new cache manager, including new categories',
+      () async {
+        final storage = MemorySharedManager();
+        final parts = {
+          for (final category in DetailPartCatalog.forAngle(angle))
+            category.title: category.images.length - 1,
+        };
+        final data = AppSelections(
+          generate: GenerateSelection(
+            angle: angle,
+            parts: parts,
+            detailColor: 'Mavi',
+          ),
+        );
+        expect(await SelectionCacheManager(storage).save(data), isTrue);
+        final restored = await SelectionCacheManager(storage).load();
+        expect(restored.generate.toJson(), data.generate.toJson());
+      },
+    );
+  }
+
+  test(
+    'Every Car Mod survives manager reload; invalid and foreign IDs do not',
+    () async {
+      final storage = MemorySharedManager();
+      final data = AppSelections(
+        explore: {
+          for (final entry in CarModCatalog.groups.entries)
+            entry.key: ExploreSelection(
+              image: 'mustang_classic',
+              option: entry.value.last.id,
+            ),
+        },
+      );
+      expect(await SelectionCacheManager(storage).save(data), isTrue);
+      final restored = await SelectionCacheManager(storage).load();
+      expect(restored.toJson(), data.toJson());
+      for (final entry in CarModCatalog.groups.entries) {
+        expect(CarModCatalog.restoreId(entry.key, ''), '');
+        expect(CarModCatalog.restoreId(entry.key, 'deleted.option'), '');
+        expect(CarModCatalog.restoreId(entry.key, 12), '');
+      }
+      expect(CarModCatalog.restoreId('Perspective', 'upholstery.black'), '');
+    },
+  );
   test('Yeni yönetici bütün onaylanan seçimleri JSON kaydından okur', () async {
     final storage = MemorySharedManager();
     final data = AppSelections(
       generate: const GenerateSelection(
+        vehicleId: 'mustang_classic',
         style: 'Klasik',
         extra: 'Jant',
         color: 'Premium Mavi',
@@ -39,12 +89,12 @@ void main() {
       ),
       explore: {
         'Customize Rims': const ExploreSelection(
-          image: 'Mock Araç 2',
-          option: 'Rim 3',
+          image: 'porsche_911',
+          option: 'rim.split_spoke',
         ),
       },
       aiVideo: {
-        'Apex Transform': const ExploreSelection(image: 'Mock Üretim 1'),
+        'Apex Transform': const ExploreSelection(image: 'mustang_classic'),
       },
     );
     expect(await SelectionCacheManager(storage).save(data), isTrue);
@@ -173,7 +223,7 @@ void main() {
         final title = video ? 'Apex Transform' : 'Change Color';
         final data = AppSelections();
         (video ? data.aiVideo : data.explore)[title] = const ExploreSelection(
-          image: 'Mock Araç 2',
+          image: 'porsche_911',
         );
         await SelectionCacheManager(storage).save(data);
         await tester.pumpWidget(
@@ -187,17 +237,20 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.text(title));
         await tester.pumpAndSettle();
-        expect(find.text('Mock Araç 2'), findsOneWidget);
-        await tester.tap(find.text('Resim Seçin'));
+        expect(
+          find.bySemanticsLabel('Seçilen araç: Porsche 911'),
+          findsOneWidget,
+        );
+        await tester.tap(find.byKey(const Key('vehicleInput')));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Mock Araç 3'));
+        await tester.tap(find.text('Jeep Wrangler'));
         await tester.pumpAndSettle();
         await tester.tap(find.text('Uygula'));
         await tester.pumpAndSettle();
         final restored = await SelectionCacheManager(storage).load();
         expect(
           (video ? restored.aiVideo : restored.explore)[title]?.image,
-          'Mock Araç 3',
+          'jeep_wrangler',
         );
       },
     );

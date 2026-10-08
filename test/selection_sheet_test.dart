@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:perasoft_staj/main.dart';
-import 'package:perasoft_staj/demos/mody_home_view.dart';
-import 'package:perasoft_staj/product/cache/generate_selection.dart';
-import 'package:perasoft_staj/product/color_options_panel.dart';
-import 'package:perasoft_staj/product/selection_sheet.dart';
+import 'package:perasoft_staj/feature/generate/view/mody_home_view.dart';
+import 'package:perasoft_staj/product/model/generate_selection.dart';
+import 'package:perasoft_staj/product/widget/color_options_panel.dart';
+import 'package:perasoft_staj/product/widget/selection_sheet.dart';
 
 Future<void> tap(WidgetTester tester, String text) async {
   await tester.tap(find.text(text).hitTestable());
@@ -83,7 +83,10 @@ void main() {
     await tester.pumpWidget(
       MyApp(
         home: ModyHomeView(
-          initialSelection: const GenerateSelection(parts: {'Spoiler': 0}),
+          initialSelection: const GenerateSelection(
+            angle: 'Rear',
+            parts: {'Spoiler': 0},
+          ),
           onApplied: (_) => saves++,
         ),
       ),

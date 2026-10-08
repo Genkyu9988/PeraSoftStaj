@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:perasoft_staj/main.dart';
 
+import 'detail_test_helpers.dart';
+
 void main() {
   testWidgets('Detail seçimleri uygulanır, iptal edilir ve bağımsız korunur', (
     tester,
@@ -50,10 +52,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('partExhaust1')));
     await tester.pumpAndSettle();
-    await tester.drag(find.byType(ListView), const Offset(0, -250));
-    await tester.pumpAndSettle();
-    expect(find.text('Rear Bumper & Diffuser'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('partTail Lights2')));
+    final tailLight = await revealDetailPart(tester, 'Tail Lights', 2);
+    await tester.tap(tailLight);
     await tester.pumpAndSettle();
     await tap('Uygula');
     expect(summary('Ayarla'), 'Spoiler 1, Exhaust 2, Tail Lights 3');

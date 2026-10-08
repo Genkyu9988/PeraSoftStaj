@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:perasoft_staj/demos/garage_view.dart';
+import 'package:perasoft_staj/feature/garage/view/garage_view.dart';
 import 'package:perasoft_staj/main.dart';
-import 'package:perasoft_staj/product/color_items.dart';
-import 'package:perasoft_staj/product/garage_items.dart';
-import 'package:perasoft_staj/product/mody_bottom_bar.dart';
+import 'package:perasoft_staj/product/init/theme/color_items.dart';
+import 'package:perasoft_staj/feature/garage/data/garage_items.dart';
+import 'package:perasoft_staj/product/widget/mody_bottom_bar.dart';
 
 void main() {
   for (final size in [const Size(390, 844), const Size(320, 640)]) {

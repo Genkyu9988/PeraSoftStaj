@@ -54,6 +54,11 @@ void main() {
     await tester.pumpWidget(const MyApp());
     for (final mode in ['Style Builder', 'Detail Edit']) {
       await _tap(tester, mode);
+      if (mode == 'Detail Edit') {
+        await _tap(tester, 'Açı');
+        await _tap(tester, 'Front');
+        await _tap(tester, 'Uygula');
+      }
       await _tap(tester, 'Renk');
       for (final name in ['Kırmızı', 'Mavi', 'Mor', 'Gri']) {
         expect(find.text(name), findsOneWidget);
@@ -98,8 +103,10 @@ void main() {
     _setPhoneSize(tester);
     await tester.pumpWidget(const MyApp());
 
-    await tester.drag(
-      find.byKey(const Key('generateModes')),
+    // Swipe above the independent horizontal sample-car list.
+    await tester.dragFrom(
+      tester.getTopLeft(find.byKey(const Key('generateModes'))) +
+          const Offset(200, 40),
       const Offset(-350, 0),
     );
     await tester.pumpAndSettle();
@@ -122,6 +129,11 @@ void main() {
     await tester.pumpWidget(const MyApp());
     for (final mode in ['Style Builder', 'Detail Edit']) {
       await _tap(tester, mode);
+      if (mode == 'Detail Edit') {
+        await _tap(tester, 'Açı');
+        await _tap(tester, 'Rear');
+        await _tap(tester, 'Uygula');
+      }
       final panels = mode == 'Style Builder'
           ? {
               'Stil': 'Stil seçin',

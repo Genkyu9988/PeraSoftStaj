@@ -1,8 +1,221 @@
 GÖRSEL KAYNAKLARI / IMAGE CREDITS
 
+Detail Edit angle-dependent parts — downloaded 2026-10-04.
+Unretouched Wikimedia Commons thumbnails. Representative photographs of
+installed parts, not original-app cutouts, exact fitment or generated results.
+Existing hood.jpg, body_kit.jpg, rim.jpg, mod_rim_2.jpg, mod_rim_3.jpg and the
+Rear category photos are reused with their original credits below.
+
+front_bumper_1.jpg — Nissan CBA-R35 GT-R Premium edition (23090315543)
+Author: 先従隗始 — CC0
+https://commons.wikimedia.org/w/index.php?curid=156592911
+https://creativecommons.org/publicdomain/zero/1.0/
+
+front_bumper_2.jpg — 1973 Vega GT - 5 MPH front bumper
+Author: Vegavairbob — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=17872621
+https://creativecommons.org/licenses/by-sa/3.0/
+
+front_bumper_3.jpg — 71 Dart Front Bumper L
+Author: Scheinwerfermann — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=7271041
+https://creativecommons.org/licenses/by-sa/3.0/
+
+hood_2.jpg — The hood scoop of Subaru WRX S4 GT-H EX (5BA-VBH)
+Author: Tokumeigakarinoaoshima — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=113617052
+https://creativecommons.org/licenses/by-sa/4.0/
+
+hood_3.jpg — New Carbon Fiber hood scoop. (5087614600)
+Author: William J Sisti — CC BY-SA 2.0
+https://commons.wikimedia.org/w/index.php?curid=142196657
+https://creativecommons.org/licenses/by-sa/2.0/
+Carbon-fiber scoop on a MINI hood; the entire hood is not claimed to be carbon.
+
+headlight_1.jpg — 2023-02-04 BMW G21 Hybrid LCI headlights
+Author: Wikisympathisant — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=128405010
+https://creativecommons.org/licenses/by-sa/4.0/
+
+headlight_2.jpg — Audi R8 Headlights (4488300959)
+Author: Razvan Orendovici — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=117694171
+https://creativecommons.org/licenses/by/2.0/
+
+headlight_3.jpg — 1970 Dodge Coronet Super Bee with Yellow High-Beams-3
+Author: DanTD — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=71538524
+https://creativecommons.org/licenses/by-sa/4.0/
+
+side_skirt_2.jpg — Porsche Mission E, Berlin (1X7A3883)
+Author: Matti Blume — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=68367178
+https://creativecommons.org/licenses/by-sa/4.0/
+
+side_skirt_3.jpg — 2006 Honda Integra Type R side
+Author: Sadukar09 — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=48978476
+https://creativecommons.org/licenses/by-sa/4.0/
+Whole-car view showing a Modulo side skirt, not an isolated part photograph.
+
+Remaining Car Mods pickers — downloaded 2026-10-03. Commons thumbnails,
+unretouched. Existing spoiler/exhaust/explore_audio/explore_tints photos reused.
+Tint labels describe representative visual appearances, not measured VLT or
+certified tint grades. Reflections/lighting differ across reference vehicles.
+
+mod_audio_subwoofer.jpg — Car subwoofer
+Author: User:Coaster J — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Car_subwoofer.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+mod_audio_door.jpg — Harman Kardon Car Audio Speaker (cropped)
+Author: Cozinsky — CC BY-SA 3.0
+https://commons.wikimedia.org/wiki/File:Harman_Kardon_Car_Audio_Speaker_(cropped).jpg
+https://creativecommons.org/licenses/by-sa/3.0/
+The source is already cropped; no additional pixel editing was performed.
+
+mod_tint_smoke.jpg — Tesla Y Ceramic window tint red
+Author: Dimosca — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Tesla_Y_Ceramic_window_tint_red.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+Used for dark appearance; no measured tint-grade claim.
+
+mod_tint_reflective.jpg — Window tint car
+Author: Steevven1 at English Wikipedia — CC BY 2.5
+https://commons.wikimedia.org/wiki/File:Window_tint_car.jpg
+https://creativecommons.org/licenses/by/2.5/
+Used for reflective appearance, not a measured tint grade.
+
+Expanded Car Mods selections — downloaded 2026-10-03, Commons thumbnails.
+No retouching. Reference photos illustrate only the labeled feature; the
+vehicles are not promised generated results. Perspective images are front/rear
+three-quarter views and a side view, not three photos of the same exact car.
+
+mod_mirror_carbon.jpg — Carbon mirror cover 2
+Author: Motokoka — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Carbon_mirror_cover_2.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+mod_mirror_classic.jpg — VW door mirror
+Author: John Allan — CC BY-SA 2.0
+https://commons.wikimedia.org/wiki/File:VW_door_mirror_-_geograph.org.uk_-_2310401.jpg
+https://creativecommons.org/licenses/by-sa/2.0/
+
+mod_roof_open.jpg, mod_roof_closed.jpg — Audi A4 B9 Avant Allroad sunroof
+Author: Acgskup — CC BY 4.0
+https://commons.wikimedia.org/wiki/File:2023_Audi_A4_B9_Avant_Allroad_-_sunroof_open.jpg
+https://commons.wikimedia.org/wiki/File:2023_Audi_A4_B9_Avant_Allroad_-_sunroof_closed.jpg
+https://creativecommons.org/licenses/by/4.0/
+The open/closed distinction in these photos is the interior shade, not proof
+that the exterior glass is slid open.
+
+mod_seat_red.jpg — Mercedes-Benz G 500 red leather interior
+Author: David Adam Kess — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Mercedes-Benz_interior_G_500_,_v8,_red_leather_interior.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+mod_seat_brown.jpg — AMC AMX brown leather interior (2of3)
+Author: Christopher Ziemnowicz (CZmarlin) — CC0
+https://commons.wikimedia.org/wiki/File:1969_AMC_AMX_in_green_with_white_stripes_and_brown_leather_interior_at_2021_All_AMC_Day_Cecil_Dragway_show_2of3.jpg
+https://creativecommons.org/publicdomain/zero/1.0/
+
+mod_sticker_stripes.jpg — Ford Mustang racing stripes
+Author: David Adam Kess — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Racing_Stripes,_Ford_Mustang_Sixth_generation,_convertible,_pic.aaa_Photography_by_David_Adam_Kess.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+Explore expansion covers — downloaded 2026-10-03 from Wikimedia Commons.
+Source thumbnails, no retouching; Flutter may crop them to fit cards.
+These are representative photographs, not generated results or endorsements.
+AI Car Restore reuses classic.jpg. Physical model/statue photographs do not
+demonstrate AI transformation, 3D generation or style transfer.
+
+explore_audio.jpg — Car Audio
+Author: Jaimeluisgg — CC0
+https://commons.wikimedia.org/wiki/File:Car_Audio.jpg
+https://creativecommons.org/publicdomain/zero/1.0/
+
+explore_chrome.jpg — 2018 BMW 330e M Sport Shadow Edition 2.0 Front
+Author: Vauxford — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:2018_BMW_330e_M_Sport_Shadow_Edition_2.0_Front.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_bodykit.jpg — Stunningly mad be-winged Porsche
+Author: Supermac1961 — CC BY 2.0
+https://commons.wikimedia.org/wiki/File:Stunningly_mad_be-winged_Porsche_-_Flickr_-_Supermac1961.jpg
+https://creativecommons.org/licenses/by/2.0/
+
+explore_perspective.jpg — Ferrari Daytona SP3 rear three-quarter view
+Author: Aos.1905 — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Ferrari_Daytona_SP3_(rear_three-quarter_view)_at_Osaka_Auto_Messe_2026.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_mirror.jpg — Acura MDX Sport Hybrid SH-AWD right side door mirror
+Author: Dinkun Chen — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:ACURA_MDX_SPORT_HYBRID_SH-AWD_(YD3)_CHINA_VERSION_RIGHT_SIDE_DOOR_MIRROR.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_sunroof.jpg — Dual Sunroofs Above, 2012 Chrysler 300S
+Author: Michael Sheehan — CC BY 2.0
+https://commons.wikimedia.org/wiki/File:Dual_Sunroofs_Above_-_2012_Chrysler_300S_(6996092828).jpg
+https://creativecommons.org/licenses/by/2.0/
+
+explore_sticker.jpg — Fully vinyl wraped car with pattern
+Author: Tobias ToMar Maier — CC BY-SA 3.0
+https://commons.wikimedia.org/wiki/File:Fully_vinyl_wraped_car_with_pattern.jpg
+https://creativecommons.org/licenses/by-sa/3.0/
+
+explore_upholstery.jpg — 1969 AMC Javelin interior in black leather
+Author: Christopher Ziemnowicz (CZmarlin) — CC0
+https://commons.wikimedia.org/wiki/File:1969_AMC_Javelin_-_interior_in_black_leather_upholstery_tilt_wheel_AM-FM.jpg
+https://creativecommons.org/publicdomain/zero/1.0/
+
+explore_technic.jpg — LEGO Technic Porsche 911 RSR (42096)
+Author: Norsyazwan — CC BY 4.0
+https://commons.wikimedia.org/wiki/File:LEGO_Technic_Porsche_911_RSR_(42096).jpg
+https://creativecommons.org/licenses/by/4.0/
+
+explore_toy.jpg — Corvette69 hotwheels 03
+Author: Fernando Martello — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Corvette69_hotwheels_03.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_figurine.jpg — Toyota Supra scale model, Diecast Convention Mexico 2017
+Author: Kenyirotsuru — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:Coche_Toyota_Supra_naranja_con_cap%C3%B3_abierto,_Diecast_Convention,_Mexico_2017.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_tints.jpg — BM e30 phares jaunes
+Author: Dacia 1410 Sport — CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:BM_e30_phares_jaunes.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_clone.jpg — Two Lamborghini DSC01732
+Author: Axion23 — CC BY 2.0
+https://commons.wikimedia.org/wiki/File:Two_Lamborghini_DSC01732_(3046843290).jpg
+https://creativecommons.org/licenses/by/2.0/
+
+explore_robot.jpg — Optimus Prime statue, Phoenix Comicon 2014
+Author: Gage Skidmore — CC BY-SA 2.0
+https://commons.wikimedia.org/wiki/File:Optimus_Prime_statue_(14334013566).jpg
+https://creativecommons.org/licenses/by-sa/2.0/
+
+neon_red_photo.jpg, neon_purple_photo.png, neon_cyan_photo.png,
+neon_green_photo.png, neon_multicolor_photo.png
+Original: My Accent SR with LED underbody Lights (2539840531)
+Author: Michael from Calgary, AB, Canada — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=70194159
+https://www.flickr.com/photos/msvg/2539840531/
+https://creativecommons.org/licenses/by/2.0/
+Red: original resized photograph. Purple, cyan, green and multicolor:
+AI-edited underbody light colors derived from this real photograph, 2026-10-02.
+No endorsement by the original photographer is implied.
+See assets/NEON_PHOTO_EDITS.md for the editing prompts.
+
 Source: Wikimedia Commons. Downloaded 2026-09-30.
 Images are illustrative option previews, not promised AI results or endorsements.
-Commons-provided resized thumbnails are bundled; no retouching was performed.
+Commons-provided resized thumbnails are bundled. Edited neon variants are
+explicitly identified below; other photographs have not been retouched.
 Flutter fits the photos inside cards. The image licenses below apply to the
 images independently of the application code. Retain this attribution on reuse.
 
@@ -63,3 +276,210 @@ body_kit.jpg — BMW M2 M-Performance, Frankfurt (1Y7A3532)
 Author: Matti Blume — CC BY-SA 4.0
 https://commons.wikimedia.org/w/index.php?curid=62523369
 https://creativecommons.org/licenses/by-sa/4.0/
+
+DETAIL EDIT — Downloaded 2026-10-01. Representative views and parts;
+the angle photos are not three views of the exact same vehicle.
+Spoiler option 1 reuses spoiler.jpg credited above.
+
+angle_front.jpg — 2013 Ford Mustang GT (front view)
+Author: Aneekr — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=19230942
+https://creativecommons.org/licenses/by-sa/3.0/
+
+angle_rear.jpg — 2013 Ford Mustang GT (rear view)
+Author: Aneekr — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=19230941
+https://creativecommons.org/licenses/by-sa/3.0/
+
+angle_side.jpg — 2017 Ford Mustang, blue, side, Carmody Middle School Car Show 2026-09-17
+Author: Xnatedawgx — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=200113092
+https://creativecommons.org/licenses/by-sa/4.0/
+
+spoiler_2.jpg — Porsche 996 GT3 1999 spoiler
+Author: Stahlkocher — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=5304818
+https://creativecommons.org/licenses/by-sa/3.0/
+
+spoiler_3.jpg — AMC Javelin 1969 Craig Breedlove roof spoiler detail
+Author: CZmarlin / Christopher Ziemnowicz — Public domain
+https://commons.wikimedia.org/w/index.php?curid=11999462
+
+exhaust_1.jpg — 2006 Car Exhaust Pipe
+Author: Matthew Paul Argall — Public domain
+https://commons.wikimedia.org/w/index.php?curid=10866711
+
+exhaust_2.jpg — Akrapovic Slip-On exhaust system for the BMW E92 M3
+Author: section215 from NYC — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=20708994
+https://creativecommons.org/licenses/by/2.0/
+
+exhaust_3.jpg — Exhaust Pipes - 2015 BMW M3 (15980458666)
+Author: Michael Sheehan — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=39509099
+https://creativecommons.org/licenses/by/2.0/
+
+diffuser_1.jpg — Diffuser on BMW M4
+Author: Duboyong — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=116765241
+https://creativecommons.org/licenses/by-sa/4.0/
+
+diffuser_2.jpg — Mercedes-Benz SLR McLaren 722 Edition diffuser
+Author: LSDSL — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=7919337
+https://creativecommons.org/licenses/by-sa/3.0/
+
+diffuser_3.jpg — " 14 - ITALIAN RACE CAR - Ferrari FXX Diffuser
+Author: Maurizio Manna — CC BY-SA 3.0 it
+https://commons.wikimedia.org/w/index.php?curid=36832201
+https://creativecommons.org/licenses/by-sa/3.0/it/deed.en
+
+tail_light_1.jpg — 1966 Ford Custom 4 door sedan tail light 240
+Author: 1966fordcustomsedan — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=122457199
+https://creativecommons.org/licenses/by-sa/4.0/
+
+tail_light_2.jpg — Mercedes S-Class LED Tail Light (W222)
+Author: A. Bailey — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=30881918
+https://creativecommons.org/licenses/by-sa/3.0/
+
+tail_light_3.jpg — Skyline R33 tail light
+Author: Lewis Collard — CC0 1.0
+https://commons.wikimedia.org/w/index.php?curid=20836821
+https://creativecommons.org/publicdomain/zero/1.0/
+
+EXPLORE COVERS — Downloaded 2026-10-01.
+Representative cover photos only, not original app artwork or AI outputs.
+Existing paint/rim/neon/classic/off_road/suv/race/angle_front/body_kit/sport
+photos are reused; their credits are above.
+
+explore_suspension.jpg — Doors Open Milwaukee 2024 04 (1965 Chevrolet Impala lowrider)
+Author: Michael Barera — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=154923120
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_tire.jpg — Tire Tread (4045722669)
+Author: Paul Heaberlin — CC BY-SA 2.0
+https://commons.wikimedia.org/w/index.php?curid=165703362
+https://creativecommons.org/licenses/by-sa/2.0/
+
+explore_japanese.jpg — Nissan Skyline GT-R V-spec, BAS 24, Brussels (P1170369-RR)
+Author: Matti Blume — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=145243697
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_countryside.jpg — Car countryside road Edinburgh (Unsplash)
+Author: Michael Lechner (mlechner) — CC0 1.0
+https://commons.wikimedia.org/w/index.php?curid=61862815
+https://creativecommons.org/publicdomain/zero/1.0/
+
+explore_workshop.jpg — Car maintenance in a garage with equipment for engine work and a vehicle being serviced
+Author: Shixart1985 — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=199729673
+https://creativecommons.org/licenses/by/2.0/
+
+explore_crystal.jpg — Decorated Mercedes on Tokyo Auto Salon
+Author: https://www.flickr.com/people/92496717@N00 — CC BY-SA 2.0
+https://commons.wikimedia.org/w/index.php?curid=15619601
+https://creativecommons.org/licenses/by-sa/2.0/
+
+explore_night.jpg — A busy city street at night with cars and a parked taxi illuminated by neon signs and streetlights
+Author: Pattaya Patrol — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=197516149
+https://creativecommons.org/licenses/by-sa/4.0/
+
+explore_speed.jpg — Mobile speed camera
+Author: Tarcus at English Wikipedia — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=9943906
+https://creativecommons.org/licenses/by-sa/3.0/
+
+explore_city.jpg — Moscow, black Porsche parked in Moscow-City (31032729005)
+Author: Gennady Grachev — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=70134654
+https://creativecommons.org/licenses/by/2.0/
+
+explore_crash.jpg — Crashed car in Helsinki
+Author: Pudelek (Marcin Szala) — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=16902127
+https://creativecommons.org/licenses/by-sa/3.0/
+
+CAR MODS OPTIONS — Downloaded 2026-10-01.
+Illustrative previews, not promised modification results. Neon photos include
+different scenes of underglow and a neon-style car illustration.
+Rim 1, Suspension 1/2, Neon 1 and Tire 1 reuse previously credited images.
+
+mod_rim_2.jpg — Alloy wheel mercury
+Author: Ruben de Rijcke — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=10938539
+https://creativecommons.org/licenses/by-sa/3.0/
+
+mod_rim_3.jpg — Wheel, IAA 2017, Frankfurt (1Y7A2848)
+Author: Matti Blume — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=62521689
+https://creativecommons.org/licenses/by-sa/4.0/
+
+mod_rim_4.jpg — Wheel, IAA 2017, Frankfurt (1Y7A2858)
+Author: Matti Blume — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=62521702
+https://creativecommons.org/licenses/by-sa/4.0/
+
+mod_rim_5.jpg — Wheel, IAA 2017, Frankfurt (1Y7A3115)
+Author: Matti Blume — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=62521753
+https://creativecommons.org/licenses/by-sa/4.0/
+
+mod_suspension_3.jpg — '55 Buick (6906590819)
+Author: JOHN LLOYD — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=66345592
+https://creativecommons.org/licenses/by/2.0/
+
+mod_suspension_4.jpg — BMW 525 E12 1977 - Flickr - WillVision Photography
+Author: WillVision — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=92407588
+https://creativecommons.org/licenses/by/2.0/
+
+mod_suspension_5.jpg — Bigfoot 19 Monster Truck 2013
+Author: Raymond Wambsgans — CC BY-SA 2.0
+https://commons.wikimedia.org/w/index.php?curid=85617786
+https://creativecommons.org/licenses/by-sa/2.0/
+
+mod_neon_2.png — Colored underglow lights on vehicle in Inverness, Florida
+Author: The Eloquent Peasant — CC BY 4.0
+https://commons.wikimedia.org/w/index.php?curid=180824371
+https://creativecommons.org/licenses/by/4.0/
+
+mod_neon_3.jpg — Neon car (29992614714)
+Author: bluesbby — CC BY-SA 2.0
+https://commons.wikimedia.org/w/index.php?curid=113450480
+https://creativecommons.org/licenses/by-sa/2.0/
+
+mod_neon_4.jpg — Underglow lights (50120351152)
+Author: Zach Catanzareti Photo — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=92369949
+https://creativecommons.org/licenses/by/2.0/
+
+mod_neon_5.jpg — Underglow lights and fans (50120127261)
+Author: Zach Catanzareti Photo — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=92369962
+https://creativecommons.org/licenses/by/2.0/
+
+mod_tire_2.jpg — Bridgestone F1 Intermediate Tyres
+Author: Gregory Moine — CC BY 2.0
+https://commons.wikimedia.org/w/index.php?curid=11367054
+https://creativecommons.org/licenses/by/2.0/
+
+mod_tire_3.jpg — Moskvich 407 tire
+Author: Sergey Korovkin 84 — CC BY-SA 4.0
+https://commons.wikimedia.org/w/index.php?curid=64223713
+https://creativecommons.org/licenses/by-sa/4.0/
+
+mod_tire_4.jpg — Tire tread
+Author: Jbobby — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=16212888
+https://creativecommons.org/licenses/by-sa/3.0/
+
+mod_tire_5.jpg — Tyres 2
+Author: ProjectManhattan — CC BY-SA 3.0
+https://commons.wikimedia.org/w/index.php?curid=30541048
+https://creativecommons.org/licenses/by-sa/3.0/

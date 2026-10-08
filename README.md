@@ -4,6 +4,144 @@ Bu proje, Mody AI uygulamasının ana ekranından esinlenilen bir Flutter arayü
 çalışmasıdır. Dart ve Flutter konuları staj süresince bu proje üzerinde
 uygulanır.
 
+## AI API öncesi doğrulama — 8 Ekim 2026
+
+Küçük ekran ve büyük yazıda seçim kutuları, alt menü, renk panelleri ve
+işlem düğmelerinin taşma/erişim sorunları düzeltildi. Üret ve Garaj üst
+alanları gerektiğinde kaydırılabilir. Seçimler, cache, açı–parça uyumu ve
+Cubit/servis sorumlulukları korunur; gerçek AI API veya yeni paket eklenmedi.
+
+**745 test başarılı**, statik analiz temiz, Android debug APK derlendi.
+Android emülatöründe normal/büyük yazı ve sistem geri dönüşü için sınırlı
+kontrol yapıldı; fiziksel cihaz doğrulaması tamamlanmış sayılmaz.
+
+- [Hangi videodan, transkriptten ve GitHub örneğinden nasıl yararlandık?](docs/learning_sources.md)
+- [Düzeltmeler, test kapsamı ve cihaz kontrolünün sınırları](docs/pre_api_verification.md)
+
+Ana kaynaklar: Temelden Zirveye Flutter 4/5 (widget), 9 (servis), 18
+(test edilebilirlik), 19 (Cubit); Mimari v2 8 (responsive), 11 (state),
+13 (testler). Önceki dosya/tema adımlarında Mimari v2 2/6/9 da kullanıldı.
+[Flutter-Full-Learn](https://github.com/VB10/Flutter-Full-Learn) ve
+[architecture_template_v2](https://github.com/VB10/architecture_template_v2)
+örneklerinden yöntem alındı; tüm paketler veya mimari olduğu gibi kopyalanmadı.
+Alttaki bölümler önceki aşamaların tarihli kayıtlarıdır.
+
+## Girdi–sonuç hazırlığı — 8 Ekim 2026
+
+Mevcut seçimler sağlayıcıdan bağımsız `GenerationPlan` modeline çözümlenir:
+araç/referans görselleri, açık parça kimlikleri ve ortak renk anlamları.
+Eski cache biçimi, ekranlar ve açı–parça kuralları korunur. Sahte sonuç artık
+açıkça `DemoGenerationResult`; video isteği gerçek video çıktısı sayılmaz.
+Gerçek API JSON'u, yükleme, sunucu ve sağlayıcı yanıtı henüz eklenmedi.
+
+99 yeni testle toplam 731 test başarılı; statik analiz temiz, debug APK derlendi.
+Kaynakların uygulanışı, kapsam ve kalan sağlayıcı işleri:
+[Girdi–sonuç sözleşmesi](docs/generation_contract.md).
+
+## AI Video — sahte üretim akışı — 8 Ekim 2026
+
+AI Video'nun mevcut 15 şablonu ortak sahte servise bağlandı. Video Oluştur
+artık yüklenme, demo sonuç, hata/tekrar deneme ve vazgeçme akışını çalıştırır.
+Kapaklar statik görsel kalır; gerçek video üretilmez veya oynatılmaz. Sonuç
+seçilen orijinal araç fotoğrafını, AI Video kaynağını ve şablon adını gösterir.
+Üret ve Explore davranışları, seçimler ve cache biçimi korunur.
+
+632 test başarılı; analiz temiz, Android debug APK derlendi. Widget-test
+önizlemeleri incelendi; bu aşamada canlı cihaz testi yapılmadı. Kaynakların
+kod karşılıkları, kapsam ve elle deneme komutları:
+[AI Video sahte servis notları](docs/ai_video_generation.md).
+Alttaki bölümler önceki aşamaların tarihli kayıtlarıdır.
+
+## Explore — ortak sahte üretim akışı — 7 Ekim 2026
+
+Explore'daki 37 işlem artık Üret ile aynı sahte servis yaşam döngüsünü kullanır:
+doğrulama, yüklenme, hata/tekrar deneme, vazgeçme ve demo sonuç. Sonuçta orijinal
+araç fotoğrafı, işlem ve gönderilen hedef/renk/referans gösterilir; gerçek AI
+üretimi yapılmaz. Üret'in Style Builder, Custom Edit ve Detail Edit akışları
+korunur. AI Video bu genişletmeye dahil değildir; statik kapaklar ve mevcut
+mock davranışı değişmez.
+
+Seçim panelleri ve cache biçimi korunur; Explore'da yalnız üretim durumu Cubit
+ile yönetilir. Yeni paket eklenmedi. Ders 4/5, 9/18/19 ve Mimari v2 11/13'ün
+somut kod karşılıkları ve deneme adımları:
+[Explore sahte servis notları](docs/explore_generation.md).
+
+583 test başarılı, statik analiz temiz, Android debug APK derlendi. Görsel
+kontrolün kapsamı bağlantılı notta bulunur. Alttaki bölümler önceki aşamaların tarihli
+kayıtlarıdır; eski kapsam sınırları kendi tarihleri için geçerlidir.
+
+## Mimari C — sahte üretim servisi — 6 Ekim 2026
+
+Üret'in üç modunda yüklenme, hata/tekrar deneme, vazgeçme ve demo sonuç akışı
+hazır. Sonuç mevcut araç fotoğrafını ve gönderilen seçimleri gösterir;
+**AI ile üretilmediği açıkça belirtilir**. Uyarılar, Fikir Ver, açı-parça
+eşleşmeleri ve cache biçimi korunur. Diğer ekranlara servis/Cubit taşınmadı.
+
+9, 18 ve 19. derslerin zamanları, öğretmenin repo kodları, uyarlama kararları
+ve deneme komutları: [Mimari C notları](docs/architecture_stage_c.md).
+510 test başarılı, analiz temiz, Android debug APK derlendi. Emülatörün
+Android servis hatası nedeniyle canlı yükleme/açılış doğrulanamadı.
+
+Normal demo başarılıdır. Kontrollü hata ve tekrar deneme için
+`flutter run --dart-define=MODY_DEMO_FAIL_FIRST=true` kullanılabilir.
+Alttaki bölümler önceki aşamaların tarihli kayıtlarıdır.
+
+## Mimari B — Üret ekranında Cubit pilotu — 6 Ekim 2026
+
+Yalnızca Üret'in onaylanmış seçimleri, Fikir Ver ve doğrulama kararları
+GenerateCubit/GenerateState'e taşındı. Controller'lar ve panel taslakları
+görünümde kaldı; Explore, AI Video ve Garaj Cubit'e geçirilmedi. Ekran tasarımı,
+uyarı metinleri, açı-parça eşleşmeleri ve mevcut kayıt biçimi korunur.
+
+Mimari v2 ders 11 ve 13'teki yöntemlerin repo karşılıkları, sahiplik ve test
+ayrıntıları: [Mimari B notları](docs/architecture_stage_b.md).
+473 test başarılı, analiz temiz, Android debug APK derlendi. Bağlı cihaz
+olmadığından canlı emülatör testi yapılmadı. Yeni paketler nedeniyle uygulamayı
+durdurup yeniden çalıştırın.
+Alttaki bölümler önceki aşamaların tarihli kayıtlarıdır.
+
+## Mimari A — dosya ve tema düzenlemesi — 5 Ekim 2026
+
+Mevcut ekranlar `lib/feature` altında sorumluluklarına göre düzenlendi;
+ortak katalog, model, doğrulama, widget ve kayıt kodları `lib/product` altında
+gruplandı. Explore ve AI Video'nun ortak detay ekranı `feature/editor`
+altındadır. Üret görünümünün alt bileşenleri ayrı widget dosyalarına çıkarıldı.
+Tema `product/init/theme/mody_theme.dart` içine alındı; tasarım ve davranışlar
+değiştirilmedi. Yeni paket, AI API veya Cubit eklenmedi; kayıt biçimi korunur.
+
+Kullanılan Mimari v2 dersleri (2, 6, 8, 9, 13), öğretmenin repo karşılıkları,
+yerleşim kuralları ve doğrulama: [Mimari A notları](docs/architecture_stage_a.md).
+Bu aşamanın sonucu: 428 test başarılı, analiz temiz, Android debug APK derlendi.
+Emülatör kapalı olduğundan bu aşamada canlı cihaz testi yapılmadı.
+Alttaki tarihli bölümler önceki geliştirme aşamalarının kayıtlarıdır.
+
+## Fikir Ver ve metin önerileri — 5 Ekim 2026
+
+Fikir Ver artık Style Builder'da mevcut katalogdan araç + stil + ekstra + renk,
+Custom Edit'te yalnızca araç, Detail Edit'te araç + açı + o açıya uygun tek parça
++ renk seçer. Detail parça havuzu seçilen açıyla sınırlıdır; önceki parçalar
+taşınmaz. Custom Edit'in sihirli ikonu araç olmadan da yerel İngilizce açıklama
+önerir; metin düzenlenebilir ve çarpıyla temizlenebilir. Öneriler üretimi
+başlatmaz; mevcut uyarılar ve kayıt kuralları korunur.
+
+Üret'teki soru işareti ve Canlı Edit kaldırıldı. Gerçek fotoğraf yükleme
+eklenmedi; AI Video kapakları statik görsel kalır. Öğretmenin örnekleri,
+uyarlama kararları ve test kapsamı: [Fikir Ver notları](docs/generate_ideas.md).
+Alttaki eski tarihli yer tutucu açıklamaları önceki kilometre taşlarını anlatır.
+Son doğrulama: 422 test başarılı, `flutter analyze` temiz; 12 gerçek fontlu
+önizleme test ortamında incelendi. Bu turda telefon/emülatör testi yapılmadı.
+
+## Detail Edit: açıya göre Ayarla — 4 Ekim 2026
+
+Front 3, Rear 4, Side 7 kategori gösterir. Dokuz ortak kategori üçer parça
+fotoğrafı kullanır; on yeni kaynaklı fotoğraf eklenmiştir. Kategoriler dikey,
+fotoğraflar yatay kaydırılır. Farklı bir açı onaylanınca parçalar sıfırlanır,
+renk korunur; aynı açıyı onaylama ve iptal seçimleri silmez. Araç kaldırma
+diğer seçimleri etkilemez. Yeni kategoriler de kalıcı kayda dahildir.
+Üret düğmesi doğrulaması/uyarıları bu adımda değiştirilmemiştir.
+Öğretim kaynakları, ürün kuralları ve test kapsamı:
+[Detail Edit notları](docs/detail_angle_parts.md).
+
 ## Mock UI v1 — 30 Eylül 2026
 
 İlk mock frontend kilometre taşıdır; gerçek medya veya AI üretimi içeren
@@ -37,8 +175,24 @@ ikon gösterilir; contain kullanımı araç/parçanın kırpılmasını önler.
 Stil/Ekstra Uygula, iptal ve cache davranışları değişmemiştir; diğer ekranların
 mock görselleri kapsam dışıdır. Üret modları ortak Örnek Arabalar widget'ını kullanır.
 
-Kaynak ve lisanslar `assets/IMAGE_CREDITS.txt` içindedir; uygulamada Örnek
-Arabalar başlığının yanındaki bilgi düğmesinden de okunabilir.
+Detail Edit de aynı yapıyı kullanır: Front/Rear/Side için üç fotoğraf,
+Spoiler/Exhaust/Rear Bumper & Diffuser/Tail Lights için üçer parça önizlemesi.
+14 yeni dosya eklenmiştir; mevcut spoiler görseli yeniden kullanıldığı için
+toplam 26 benzersiz yerel fotoğraf vardır. Açı görselleri temsili örneklerdir;
+üçü aynı aracın farklı çekimleri değildir. Seçenek adları ve kayıt indeksleri
+değişmez; Uygula/iptal/cache davranışı korunur. Parça listesi kaydırılırken
+Uygula sabit kalır. Renk paneli değişmez.
+
+Bu genişletmede #4 transkriptinin 53–59. dakika aralığındaki yol yönetimi ve
+ortak görsel widget'ı ile #5'in 44–45 ve 50–51. dakikalarındaki parametreli
+bileşen/sorumluluk ayrımı esas alınmıştır. Repo karşılıkları:
+[image_learn.dart](https://github.com/VB10/Flutter-Full-Learn/blob/6b43107/lib/101/image_learn.dart)
+ve [random_image.dart](https://github.com/VB10/Flutter-Full-Learn/blob/afee901/lib/core/random_image.dart).
+Öğretmenin örnekleri projeye uyarlanır; ekranlara dosya yolları dağıtılmaz,
+gereksiz state veya yeni paket eklenmez.
+
+Kaynak ve lisanslar `assets/IMAGE_CREDITS.txt` içinde korunur. Üret ekranındaki
+Örnek Arabalar bilgi düğmesi ve açtığı kaynak penceresi kaldırılmıştır.
 
 ## Mevcut kapsam
 
@@ -62,6 +216,23 @@ Arabalar başlığının yanındaki bilgi düğmesinden de okunabilir.
 
 ## Explore önizlemesi
 
+Üret ve Explore/AI Video detayları ortak `SampleCarsArea` bileşeniyle aynı beş
+yerel araç fotoğrafını gösterir. Liste yatay kayar; callback yalnızca ilgili
+ekranın mevcut seçim akışını açar. Yeni global seçim state'i veya API eklenmez.
+#5 transkript 44:08–44:35 ortak bileşen tavsiyesi, #4 merkezi görsel yolları ve
+#7 ListView.separated yaklaşımı uygulanmıştır. Sonraki kullanıcı onayıyla kapak
+başlığı ortak `DetailCoverHeader` bileşenine taşınmıştır: `Stack` içinde kapak,
+yan/alt siyah `LinearGradient` katmanları, başlık ve geri düğmesi bulunur.
+Bu fade uygulaması eğitimden birebir alınmamıştır; Flutter'ın resmî Stack
+örneğindeki yaklaşım kullanılmıştır. Fotoğraflar değişmez, kapakta BoxFit.cover
+kullanılır. Dekoratif katmanlar IgnorePointer ile etkileşimi engellemez.
+
+Güncel: Explore'un 20 kartının mevcut kapak görseli, açılan detay ekranının
+üstünde de gösterilir. Görsel yolu detay ekranına parametre olarak aktarılır;
+aynı `ModyAssetImage` bileşeni kullanılır. Yeni görsel veya paket eklenmez.
+Resim Seçin paneli, alt seçenekler ve kayıt davranışı değişmez. Henüz kapağı
+olmayan AI Video detayları önceki yer tutucuyu kullanmaya devam eder.
+
 Explore sekmesi seçili olarak uygulama açılabilir:
 
 ```sh
@@ -70,11 +241,66 @@ flutter run -t lib/main_explore.dart
 
 Normal `flutter run` komutu Üret ekranını açmaya devam eder.
 Explore içinde Car Mods, Style Builder, Wallpaper Maker ve AI Edits bölümleri
-beşer resimsiz mock seçenek içerir. Ana içerik dikey; Style Builder ve Wallpaper
+beşer yerel kapak görselli seçenek içerir. Ana içerik dikey; Style Builder ve Wallpaper
 Maker sıraları yatay kaydırılır. Kartlar Navigator ile detay ekranını açar;
 alt çubuk dört ana bölüm arasında geçiş yapar.
 Görsellerde yalnızca dört seçenek görünen iki yatay bölüme geçici olarak
 Racing ve Night City isimleri eklenmiştir.
+
+Explore görselleri yalnızca ana listedeki 20 karta bağlıdır. Detay ekranı üst
+alanı, Resim Seçin paneli, örnek araçlar ve Rim/Neon gibi alt seçenekler bu
+değişiklikte mock kalır. 10 yeni fotoğraf ve mevcut katalogdan 10 fotoğraf
+kullanılır (proje toplamı 36 benzersiz fotoğraf). Bunlar orijinal uygulamanın
+birebir görselleri veya AI çıktıları değil, temsili kapaklardır; Dream Car & Me
+kapak görseli yalnızca spor araç gösterir, kullanıcı portresi içermez.
+
+#4 `ImageItems`/`Image.asset`, #5 parametreli StatelessWidget ve #7 liste/kart
+yaklaşımı korunur. `MockOptionCard` isteğe bağlı `imagePath` alır;
+`HorizontalMockOptions` görsel eşlemesini dışarıdan alır. Görsel verilmezse
+eski mock içerik değişmeden gösterilir; AI Video ve seçim panelleri etkilenmez.
+Kapak yolları `ImageItems.exploreCovers` içindedir. Fotoğraflar kırpılmadan
+gösterilir ve başlık için ayrı alan bırakılır. Yeni paket veya state eklenmez.
+
+### Car Mods alt seçenek görselleri
+
+Sonraki adımda yalnızca Rim/Suspension/Neon/Tire 1–5 kartlarına görseller
+eklenmiştir. 15 yeni dosya ve 5 mevcut görsel kullanılır; toplam katalog 51
+benzersiz görseldir. Bunlar temsili önizlemelerdir; Neon örnekleri aynı aracın
+beş renk varyantı değil, farklı ışık sahneleri ve bir illüstrasyondur.
+Detayın üst görseli, Resim Seçin, örnek araçlar ve renk paneli değişmemiştir.
+Style Builder/Wallpaper Maker/AI Edits detaylarına yeni seçenek eklenmez.
+
+#4 yol yönetimi (`image_learn.dart`), #5 parametreli ortak bileşen
+(`random_image.dart`, transkript 44:08–44:35), #13 panelden sonuç döndürme
+(`sheet_learn.dart`, transkript 16:48–17:25) ve #12 cache sorumluluk ayrımı
+esas alınır. `ImageItems.carModOptions` görsel eşlemesini tutar; panel bunu
+dışarıdan alıp mevcut ortak karta iletir. Cache'e dosya yolu yazılmaz,
+seçenek adları değişmez. Uygulanmayan taslaklar yine iptal edilir.
+
+### Anlamlı seçenek kataloğu (güncel)
+
+Numaralı Car Mods adları artık UI'da kullanılmaz. `CarModCatalog` her seçenek
+için sabit `id`, görünen `label`, görsel ve İngilizce `instruction` tutar.
+Örneğin `tire.whitewall` → Beyaz Yanak → yalnızca lastiğin yanak bandını beyaz
+yapma açıklaması. Görünen ad/asset yolu API talimatı yerine kullanılmamalıdır.
+Bu açıklamalar gelecekteki entegrasyon için hazırlanmıştır; henüz API'ye
+gönderilmez ve model sonucunun doğruluğu garanti edilmez. Lastik deseninin
+görünürlüğü giriş fotoğrafının açısına bağlıdır.
+
+Jant, lastik ve süspansiyon seçenekleri fotoğraftaki özelliği adlandırır.
+Neonlar aynı gerçek araç fotoğrafı üzerinde mor/turkuaz/yeşil/kırmızı/çok renkli
+alt ışık gösterir. Kırmızı orijinal fotoğraftır; diğer dört varyantın alt ışığı
+yerleşik görsel düzenleme aracıyla değiştirilmiştir. Bunlar düzenlenmiş fotoğraf
+önizlemeleridir, uygulamanın ürettiği AI sonuçları değildir. Tüm seçenekler ortak
+`ModyAssetImage` bileşenini kullanır; çizim bileşeni kaldırılmıştır. Kaynak, lisans
+ve düzenleme istemleri [NEON_PHOTO_EDITS.md](assets/NEON_PHOTO_EDITS.md) içindedir.
+Eski karma neon dosyaları ve lisansları korunmuştur. Aktif katalog 52 görseldir.
+
+Cache artık Car Mods için sabit kimlik saklar. Eski Rim/Suspension/Tire 1–5
+değerleri görselin anlamına göre yeni kimliklere çevrilir. Eski Neon 1–5'in
+tekil renk karşılığı olmadığı için seçim boşaltılır; kullanıcı yeniden seçer.
+Geçersiz veya başka gruba ait kimlikler kabul edilmez. Renk, mock resim,
+ana kapaklar ve diğer ekranlar değişmez; Uygula/iptal akışı korunur.
 
 Kaynak: VB10/Flutter-Full-Learn reposunun #7 aşamasındaki `47ba0f3` sürümü.
 `list_view_learn.dart` içindeki dikey/yatay liste ve sınırlı yükseklik yaklaşımı,
@@ -88,11 +314,17 @@ Başlık ve alt çubuk iki ekranda ortak widget'lardır; yeni paket eklenmemişt
 flutter run -t lib/main_ai_video.dart
 ```
 
-AI Video Transformations ve AI Drive Scenes yatay kaydırılan beşer mock
-seçenek içerir. AI Video Filters iki sütunda beş seçenek gösterir.
-Ana içerik dikey kaydırılır. Başlık, kartlar ve yatay listeler Explore ile
-ortaktır. Kartlar ortak mock resim seçimi detayını açar; gerçek resim,
-video oynatıcı veya API bağlantısı yoktur.
+AI Video Transformations ve AI Drive Scenes yatay kaydırılan beşer seçenek
+içerir. AI Video Filters iki sütunda beş seçenek gösterir. 15 kart, mevcut
+yerel fotoğrafları geçici kapak olarak yeniden kullanır. Bunlar gerçek video
+kareleri değildir; Cliff Fly/Snow Drift gibi efektleri birebir temsil etmez.
+Görsel eşlemeleri `ImageItems.aiVideoCovers` içindedir; kart ve detay aynı yolu
+kullanır. Detayda ortak fade başlığı, Örnek Arabalar ve Resim Seçin paneli vardır.
+Uygula/iptal ve kart bazlı cache değişmez. Yeni seçenek, dosya, paket, video
+oynatıcı veya API bağlantısı eklenmemiştir. Kullanıcının resim seçimi mock kalır.
+#4 transkript 54:51–57:59 (parametreli görsel bileşeni / image_learn.dart) ve
+#5 44:08–44:35 (ortak bileşen / random_image.dart) yaklaşımı korunur. Fade,
+önceden onaylanan resmî Flutter örneğine dayalı ortak bileşenden gelir.
 İlk iki bölümün görselde görünmeyen son ikişer adı geçici mock isimlerdir.
 
 ## Garaj önizlemesi
@@ -198,10 +430,49 @@ Doğrulama, seçim onayı ve cache işlemleri ekranlarda kalır. Butonda yerel
 durum gerekmediği için StatelessWidget kullanılır; eğitimdeki yüklenme
 örneği bu aşamada eklenmez. Yeni paket veya gerçek üretim bağlantısı yoktur.
 
+## Üret uyarıları — 4 Ekim 2026
+
+Üret ekranındaki eksik bilgi kontrolleri kırmızı alt bildirimle gösterilir:
+Style Builder araç + stil/ekstra/renkten herhangi biri; Custom Edit araç +
+boş olmayan metin; Detail Edit yalnızca araç + açı ister. Parçalar ve renk
+Detail Edit'te opsiyoneldir. Açı seçmeden Ayarla/Renk paneli açılmaz.
+Üretime basıldığında eksik araç kontrolü her modda önceliklidir.
+
+#11'deki ayrı validator/merkezi mesaj, #13'teki uygun bildirim bileşeni ve
+#18'deki test edilebilir kod yaklaşımı uyarlanmıştır. Kontrol mantığı artık
+`GenerateValidator` içindedir; ekran yalnızca eylemi bağlar ve sonucu gösterir.
+Custom Edit'te aynı hata ayrıca metin alanının altında tekrarlanmaz.
+Önceki Form/doğrulama bölümündeki bütün seçimleri zorunlu tutan davranışın
+yerine bu kurallar geçer. Geçerli giriş hâlâ mock bilgi mesajıyla sonuçlanır.
+
+Ayrıntılı kaynak-zaman eşlemesi, öğretmenin vurguları ile uygulamaya özel
+kararların ayrımı ve test kapsamı: [Üret uyarıları](docs/generate_warnings.md).
+
+## Explore ve AI Video uyarıları — 4 Ekim 2026
+
+Explore ve AI Video kartlarında eksik seçim artık üretim butonunu pasifleştirmez;
+basıldığında ilk eksik alanın kırmızı uyarısı seçim kartlarının üzerinde çıkar.
+Car Mods araç + seçenek, Change Color araç + renk, Clone araç + referans ister.
+Tek görselli Explore ve AI Video kartlarında araç yeterlidir. Clone'ın orijinal
+İngilizce mesajları korunur. Üret ekranının çalışan kuralları değişmemiştir.
+
+`ExploreValidator` ve merkezi mesajlar #11'in; ayrı bildirim sunumu ve yaşam
+döngüsü #13'ün; 38 saf doğrulama ve 92 widget testi #18'in ilgili yaklaşımını
+uyarlar. Bildirim seçim/cache değiştirmez; Apply/iptal ayrımı korunur.
+
+Kapsam 37 Explore + 15 AI Video kartının tamamıdır. Neon/Tire ve Change Color
+dışındaki 13 Car Mods için, kullanıcının açık isteğiyle Neon/Tire'ın araç +
+hedef görsel kuralı genellenmiştir. Bu kartlarda aynı davranışın orijinal
+uygulamada tek tek teyit edildiği iddia edilmez; kullanıcı onaylı varsayımdır.
+
+Tüm paket: **331 test başarılı**, statik analiz temiz. Kaynak zamanları,
+kanıt sınırları, 16 görsel kontrol ve uygulamaya özel tercihler:
+[Explore ve AI Video uyarıları](docs/explore_warnings.md).
+
 ## Henüz kapsamda olmayanlar
 
-- Yapay zekâ veya servis bağlantısı
-- Gerçek araç görselleri
+- Gerçek AI/ağ servisi bağlantısı (yerel sahte servis hazırdır)
+- Kullanıcının kendi araç fotoğrafını yüklemesi ve gerçek üretim sonuçları
 
 Bu konular sonraki entegrasyon aşamalarında ayrıca değerlendirilecektir.
 

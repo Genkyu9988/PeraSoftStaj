@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:perasoft_staj/main.dart';
-import 'package:perasoft_staj/demos/main_tabs_view.dart';
-import 'package:perasoft_staj/product/mody_bottom_bar.dart';
+import 'package:perasoft_staj/feature/shell/view/main_tabs_view.dart';
+import 'package:perasoft_staj/product/widget/mody_bottom_bar.dart';
 
 void main() {
   for (final width in [390.0, 320.0]) {
@@ -38,7 +38,7 @@ void main() {
       await tap('Change Color');
       expect(find.byType(ModyBottomBar), findsNothing);
       await tap('Resim Seçin');
-      await tap('Mock Araç 1');
+      await tap('Klasik Mustang');
       await tap('Uygula');
       await tap('Renk');
       await tap('Premium');
@@ -55,8 +55,7 @@ void main() {
       await tap('AI Video');
       await tap('Apex Transform');
       await tap('Resim Seçin');
-      await tap('Your Creations');
-      await tap('Mock Üretim 2');
+      await tap('Porsche 911');
       await tap('Uygula');
       await back();
       await tap('Garaj');
@@ -76,12 +75,18 @@ void main() {
       await back();
       await tap('Explore');
       await tap('Change Color');
-      expect(find.text('Mock Araç 1'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Seçilen araç: Klasik Mustang'),
+        findsOneWidget,
+      );
       expect(find.text('Premium Mavi'), findsOneWidget);
       await back();
       await tap('AI Video');
       await tap('Apex Transform');
-      expect(find.text('Mock Üretim 2'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Seçilen araç: Porsche 911'),
+        findsOneWidget,
+      );
       await back();
       await tap('Garaj');
       expect(find.text('Herhangi bir video üretmediniz'), findsOneWidget);
