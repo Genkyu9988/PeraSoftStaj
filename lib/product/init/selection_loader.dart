@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:perasoft_staj/feature/shell/view/main_tabs_view.dart';
 import 'package:perasoft_staj/product/model/app_selections.dart';
-import 'package:perasoft_staj/product/cache/selection_cache_manager.dart';
+import 'package:perasoft_staj/product/cache/selection_repository.dart';
 
 // Kayıt okunmadan ekranları açmayarak ilk seçimlerin üzerine yazılmasını önler.
 class SelectionLoader extends StatefulWidget {
@@ -10,7 +10,7 @@ class SelectionLoader extends StatefulWidget {
     required this.manager,
     this.initialTab = MainTab.generate,
   });
-  final SelectionCacheManager manager;
+  final SelectionRepository manager;
   final MainTab initialTab;
 
   @override

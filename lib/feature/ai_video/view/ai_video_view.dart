@@ -111,19 +111,16 @@ class _VideoFilters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _FilterRow(
-          firstTitle: AiVideoItems.filters[0],
-          onSelected: onSelected,
-          secondTitle: AiVideoItems.filters[1],
-        ),
-        const SizedBox(height: SizeItems.smallSpace),
-        _FilterRow(
-          firstTitle: AiVideoItems.filters[2],
-          onSelected: onSelected,
-          secondTitle: AiVideoItems.filters[3],
-        ),
-        const SizedBox(height: SizeItems.smallSpace),
-        _FilterRow(firstTitle: AiVideoItems.filters[4], onSelected: onSelected),
+        for (var i = 0; i < AiVideoItems.filters.length; i += 2) ...[
+          if (i > 0) const SizedBox(height: SizeItems.smallSpace),
+          _FilterRow(
+            firstTitle: AiVideoItems.filters[i],
+            onSelected: onSelected,
+            secondTitle: i + 1 < AiVideoItems.filters.length
+                ? AiVideoItems.filters[i + 1]
+                : '',
+          ),
+        ],
       ],
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:perasoft_staj/product/catalog/vehicle_catalog.dart';
 import 'package:perasoft_staj/product/init/theme/color_items.dart';
 import 'package:perasoft_staj/product/model/creation_record.dart';
+import 'package:perasoft_staj/product/model/generation_result.dart';
 import 'package:perasoft_staj/product/widget/mody_asset_image.dart';
 
 /// Presentation only: no services, persistence or navigation in a card.
@@ -76,7 +77,10 @@ class _CreationCard extends StatelessWidget {
     final dateLabel =
         '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year} '
         '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
-    final badge = record.isVideoDemo
+    final isReal = record.result is AiImageGenerationResult;
+    final badge = isReal
+        ? 'AI ile düzenlendi'
+        : record.isVideoDemo
         ? 'Video demosu • Orijinal fotoğraf'
         : 'Demo • Orijinal fotoğraf';
     return Semantics(
@@ -100,8 +104,10 @@ class _CreationCard extends StatelessWidget {
             children: [
               Expanded(
                 child: ModyAssetImage(
-                  path: record.result.originalImagePath,
-                  semanticLabel: 'Orijinal araç; AI ile üretilmedi',
+                  path: record.result.displayImagePath,
+                  semanticLabel: isReal
+                      ? 'AI ile düzenlenen araç'
+                      : 'Orijinal araç; AI ile üretilmedi',
                 ),
               ),
               Padding(

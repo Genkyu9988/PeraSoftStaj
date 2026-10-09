@@ -1,3 +1,4 @@
+import 'package:perasoft_staj/product/catalog/catalog_store.dart';
 import 'package:perasoft_staj/product/constants/image_items.dart';
 import 'package:perasoft_staj/product/model/generation_plan.dart';
 
@@ -12,7 +13,10 @@ class DetailPartCategory {
 }
 
 class DetailPartCatalog {
-  static const frontBumper = DetailPartCategory(
+  static DetailPartCategory get frontBumper =>
+      all.firstWhere((c) => c.title == 'Front Bumper');
+
+  static const seedFrontBumper = DetailPartCategory(
     title: 'Front Bumper',
     options: [
       GenerationAsset(
@@ -29,7 +33,10 @@ class DetailPartCatalog {
       ),
     ],
   );
-  static const hood = DetailPartCategory(
+  static DetailPartCategory get hood =>
+      all.firstWhere((c) => c.title == 'Hood');
+
+  static const seedHood = DetailPartCategory(
     title: 'Hood',
     options: [
       GenerationAsset(id: 'hood.classic', assetPath: ImageItems.hoodClassic),
@@ -40,7 +47,10 @@ class DetailPartCatalog {
       ),
     ],
   );
-  static const headlights = DetailPartCategory(
+  static DetailPartCategory get headlights =>
+      all.firstWhere((c) => c.title == 'Headlights');
+
+  static const seedHeadlights = DetailPartCategory(
     title: 'Headlights',
     options: [
       GenerationAsset(
@@ -54,7 +64,10 @@ class DetailPartCatalog {
       ),
     ],
   );
-  static const spoiler = DetailPartCategory(
+  static DetailPartCategory get spoiler =>
+      all.firstWhere((c) => c.title == 'Spoiler');
+
+  static const seedSpoiler = DetailPartCategory(
     title: 'Spoiler',
     options: [
       GenerationAsset(
@@ -71,7 +84,10 @@ class DetailPartCatalog {
       ),
     ],
   );
-  static const exhaust = DetailPartCategory(
+  static DetailPartCategory get exhaust =>
+      all.firstWhere((c) => c.title == 'Exhaust');
+
+  static const seedExhaust = DetailPartCategory(
     title: 'Exhaust',
     options: [
       GenerationAsset(
@@ -88,7 +104,10 @@ class DetailPartCatalog {
       ),
     ],
   );
-  static const rearBumper = DetailPartCategory(
+  static DetailPartCategory get rearBumper =>
+      all.firstWhere((c) => c.title == 'Rear Bumper & Diffuser');
+
+  static const seedRearBumper = DetailPartCategory(
     title: 'Rear Bumper & Diffuser',
     options: [
       GenerationAsset(
@@ -102,7 +121,10 @@ class DetailPartCatalog {
       GenerationAsset(id: 'diffuser.race', assetPath: ImageItems.diffuserRace),
     ],
   );
-  static const tailLights = DetailPartCategory(
+  static DetailPartCategory get tailLights =>
+      all.firstWhere((c) => c.title == 'Tail Lights');
+
+  static const seedTailLights = DetailPartCategory(
     title: 'Tail Lights',
     options: [
       GenerationAsset(
@@ -116,7 +138,10 @@ class DetailPartCatalog {
       ),
     ],
   );
-  static const rims = DetailPartCategory(
+  static DetailPartCategory get rims =>
+      all.firstWhere((c) => c.title == 'Rims/Wheels');
+
+  static const seedRims = DetailPartCategory(
     title: 'Rims/Wheels',
     options: [
       GenerationAsset(
@@ -127,7 +152,10 @@ class DetailPartCatalog {
       GenerationAsset(id: 'detail_rim.sport', assetPath: ImageItems.rimSport),
     ],
   );
-  static const sideSkirts = DetailPartCategory(
+  static DetailPartCategory get sideSkirts =>
+      all.firstWhere((c) => c.title == 'Side Skirts');
+
+  static const seedSideSkirts = DetailPartCategory(
     title: 'Side Skirts',
     options: [
       GenerationAsset(
@@ -145,23 +173,37 @@ class DetailPartCatalog {
     ],
   );
 
-  static const all = [
-    frontBumper,
-    hood,
-    headlights,
-    spoiler,
-    exhaust,
-    rearBumper,
-    tailLights,
-    rims,
-    sideSkirts,
+  static List<DetailPartCategory> get all =>
+      CatalogStore.read('detail_part_catalog.all', seedAll);
+
+  static const seedAll = [
+    seedFrontBumper,
+    seedHood,
+    seedHeadlights,
+    seedSpoiler,
+    seedExhaust,
+    seedRearBumper,
+    seedTailLights,
+    seedRims,
+    seedSideSkirts,
   ];
 
   // Product rules verified by the user, not rules from the Flutter course.
-  static const byAngle = {
-    'Front': [frontBumper, hood, headlights],
-    'Rear': [spoiler, exhaust, rearBumper, tailLights],
-    'Side': [spoiler, rims, exhaust, frontBumper, rearBumper, hood, sideSkirts],
+  static Map<String, List<DetailPartCategory>> get byAngle =>
+      CatalogStore.read('detail_part_catalog.byAngle', seedByAngle);
+
+  static const seedByAngle = {
+    'Front': [seedFrontBumper, seedHood, seedHeadlights],
+    'Rear': [seedSpoiler, seedExhaust, seedRearBumper, seedTailLights],
+    'Side': [
+      seedSpoiler,
+      seedRims,
+      seedExhaust,
+      seedFrontBumper,
+      seedRearBumper,
+      seedHood,
+      seedSideSkirts,
+    ],
   };
 
   static List<DetailPartCategory> forAngle(String angle) =>

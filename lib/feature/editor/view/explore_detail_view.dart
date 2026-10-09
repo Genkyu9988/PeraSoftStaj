@@ -78,10 +78,13 @@ class _ExploreDetailViewState extends State<ExploreDetailView> {
               widget.generationService ?? createDemoGenerationService(),
         )
       : ExploreGenerationCubit(
+          generationTimeout: realColorEnabled
+              ? const Duration(seconds: 130)
+              : const Duration(seconds: 20),
           onCompleted: (result) =>
               context.read<CreationHistoryCubit?>()?.record(result),
           generationService:
-              widget.generationService ?? createDemoGenerationService(),
+              widget.generationService ?? createGenerationService(),
         );
   bool get _blocked => _generation.state.blocksForm;
 

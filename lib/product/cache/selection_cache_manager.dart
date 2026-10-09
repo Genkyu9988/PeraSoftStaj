@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:perasoft_staj/product/model/app_selections.dart';
 import 'shared_manager.dart';
+import 'selection_repository.dart';
 
-class SelectionCacheManager {
+class SelectionCacheManager implements SelectionRepository {
   SelectionCacheManager(this.sharedManager);
   final SharedManager sharedManager;
   Future<void> _pendingSave = Future.value();
 
+  @override
   Future<AppSelections> load() async {
     final text = await sharedManager.getString(SharedKeys.selections);
     if (text == null) return AppSelections();
@@ -17,6 +19,7 @@ class SelectionCacheManager {
     return AppSelections.fromJson(data);
   }
 
+  @override
   Future<bool> save(AppSelections selections) {
     // Onay anındaki veriyi al; hızlı ardışık kayıtlar birbirini geçmesin.
     final text = jsonEncode(selections.toJson());

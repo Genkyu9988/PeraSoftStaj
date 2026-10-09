@@ -1,3 +1,5 @@
+import 'package:perasoft_staj/product/catalog/catalog_store.dart';
+
 // VB10 #4: image paths are kept outside the screen widget.
 class ImageItems {
   static const _folder = 'assets/images';
@@ -68,7 +70,10 @@ class ImageItems {
   static const catalogBuick = '$_folder/mod_suspension_3.jpg';
 
   // Existing titles are also the saved selection values; do not rename them.
-  static const styleOptions = {
+  static Map<String, String> get styleOptions =>
+      CatalogStore.read('image_items.styleOptions', seedStyleOptions);
+
+  static const seedStyleOptions = {
     'Klasik': classic,
     'Sportif': sport,
     'Off Road': offRoad,
@@ -76,7 +81,10 @@ class ImageItems {
     'Yarış': race,
     'Şehir': city,
   };
-  static const extraOptions = {
+  static Map<String, String> get extraOptions =>
+      CatalogStore.read('image_items.extraOptions', seedExtraOptions);
+
+  static const seedExtraOptions = {
     'Jant': '$_folder/rim.jpg',
     'Spoiler': '$_folder/spoiler.jpg',
     'Boya': '$_folder/paint.jpg',
@@ -85,14 +93,20 @@ class ImageItems {
     'Gövde Kiti': '$_folder/body_kit.jpg',
   };
 
-  static const angleOptions = {
+  static Map<String, String> get angleOptions =>
+      CatalogStore.read('image_items.angleOptions', seedAngleOptions);
+
+  static const seedAngleOptions = {
     'Front': '$_folder/angle_front.jpg',
     'Rear': '$_folder/angle_rear.jpg',
     'Side': '$_folder/angle_side.jpg',
   };
 
   // Explore cover images only; detail selections keep their existing content.
-  static const exploreCovers = {
+  static Map<String, String> get exploreCovers =>
+      CatalogStore.read('image_items.exploreCovers', seedExploreCovers);
+
+  static const seedExploreCovers = {
     'Change Color': '$_folder/paint.jpg',
     'Customize Rims': '$_folder/rim.jpg',
     'Suspension': '$_folder/explore_suspension.jpg',
@@ -134,7 +148,10 @@ class ImageItems {
 
   // Temporary still covers, not frames from generated videos. Reuse bundled
   // photos until scene-specific video previews are available.
-  static const aiVideoCovers = {
+  static Map<String, String> get aiVideoCovers =>
+      CatalogStore.read('image_items.aiVideoCovers', seedAiVideoCovers);
+
+  static const seedAiVideoCovers = {
     'Apex Transform': '$_folder/body_kit.jpg',
     'Pit Stop Transformation': '$_folder/explore_workshop.jpg',
     'Magnetic Transformation': '$_folder/paint.jpg',

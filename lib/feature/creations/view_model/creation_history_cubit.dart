@@ -88,13 +88,19 @@ final class CreationHistoryCubit extends Cubit<CreationHistoryState> {
 
   void record(GenerationResult result) {
     if (isClosed) return;
-    final demo = switch (result) {
-      DemoGenerationResult r => r,
-    };
+    if (result is AiImageGenerationResult &&
+        state.records.any((r) => r.id == result.id)) {
+      return;
+    }
+    ++_revision;
     final record = CreationRecord(
-      id: '$_session-${++_revision}',
-      createdAt: _clock().toUtc(),
-      result: demo,
+      id: result is AiImageGenerationResult
+          ? result.id
+          : '$_session-$_revision',
+      createdAt: result is AiImageGenerationResult
+          ? result.createdAt
+          : _clock().toUtc(),
+      result: result,
     );
     emit(state.copyWith(records: [record, ...state.records]));
     if (_canSave) _save();

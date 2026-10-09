@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:perasoft_staj/product/model/generation_request.dart';
+import 'package:perasoft_staj/product/model/explore_operation.dart';
+import 'package:perasoft_staj/product/service/generation/generation_service_factory.dart';
 import 'package:perasoft_staj/feature/generation/view_model/generation_activity.dart';
 import 'package:perasoft_staj/product/init/theme/color_items.dart';
 import 'package:perasoft_staj/product/service/generation/generation_service.dart';
@@ -23,10 +25,21 @@ class GenerationPanel extends StatelessWidget {
     if (!activity.blocksForm) return const SizedBox.shrink();
     final loading = activity.isLoading;
     final failed = activity.status == GenerationStatus.failure;
-    final loadingMessage = activity.request is AiVideoGenerationRequest
+    final isReal =
+        realColorEnabled &&
+        activity.request is ExploreGenerationRequest &&
+        const {
+          ExploreOperation.changeColor,
+          ExploreOperation.spoiler,
+        }.contains((activity.request! as ExploreGenerationRequest).operation);
+    final loadingMessage = isReal
+        ? 'Hazır araç fotoğrafı Cloudflare ile düzenleniyor. Vazgeçmek gönderilmiş API çağrısını durdurmaz; deneme sayılır.'
+        : activity.request is AiVideoGenerationRequest
         ? 'Bu bir akış denemesidir. Gerçek video üretilmiyor.'
         : 'Bu bir akış denemesidir. Gerçek AI üretimi yapılmıyor.';
     final message = switch (activity.failure) {
+      GenerationFailureKind.limit =>
+        '15 ortak deneme sınırına ulaşıldı veya başka bir işlem sürüyor. Ücretli kullanıma geçilmedi.',
       GenerationFailureKind.demo =>
         'Demo hata senaryosu çalıştırıldı. Aynı seçimlerle tekrar deneyebilirsiniz.',
       GenerationFailureKind.timeout =>
@@ -52,8 +65,10 @@ class GenerationPanel extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (loading)
-                        const CircularProgressIndicator(
-                          semanticsLabel: 'Demo hazırlanıyor',
+                        CircularProgressIndicator(
+                          semanticsLabel: isReal
+                              ? 'AI hazırlanıyor'
+                              : 'Demo hazırlanıyor',
                         )
                       else
                         Icon(
@@ -70,10 +85,14 @@ class GenerationPanel extends StatelessWidget {
                         liveRegion: true,
                         child: Text(
                           loading
-                              ? 'Demo hazırlanıyor…'
+                              ? (isReal
+                                    ? 'AI görseli hazırlanıyor…'
+                                    : 'Demo hazırlanıyor…')
                               : failed
                               ? 'İşlem tamamlanamadı'
-                              : 'Demo sonucu hazır',
+                              : (isReal
+                                    ? 'AI sonucu hazır'
+                                    : 'Demo sonucu hazır'),
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
@@ -97,7 +116,9 @@ class GenerationPanel extends StatelessWidget {
                       if (activity.status == GenerationStatus.success)
                         ModyActionButton(
                           key: const Key('showGenerationResult'),
-                          title: 'Demo Sonucunu Gör',
+                          title: isReal
+                              ? 'AI Sonucunu Gör'
+                              : 'Demo Sonucunu Gör',
                           onPressed: onShowResult,
                         ),
                       TextButton(

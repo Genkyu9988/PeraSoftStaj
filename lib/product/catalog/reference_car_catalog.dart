@@ -1,3 +1,4 @@
+import 'package:perasoft_staj/product/catalog/catalog_store.dart';
 import 'package:perasoft_staj/product/model/image_choice.dart';
 import 'package:perasoft_staj/product/constants/image_items.dart';
 
@@ -14,7 +15,10 @@ class ReferenceCar implements ImageChoice {
 
 // Reference photos describe a style, not the target vehicle's identity.
 class ReferenceCarCatalog {
-  static const items = [
+  static List<ReferenceCar> get items =>
+      CatalogStore.read('reference_car_catalog.items', seedItems);
+
+  static const seedItems = [
     ReferenceCar('reference.wide_body', 'Geniş Gövde', ImageItems.bodyWide),
     ReferenceCar('reference.racing', 'Yarış Görünümü', ImageItems.race),
     ReferenceCar(

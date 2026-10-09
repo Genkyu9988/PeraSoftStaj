@@ -1,3 +1,5 @@
+import 'package:perasoft_staj/product/catalog/catalog_store.dart';
+
 class ExploreItems {
   static const carModsTitle = 'Car Mods';
   static const styleBuilderTitle = 'Style Builder';
@@ -7,7 +9,10 @@ class ExploreItems {
   static const initialGridCount = 9;
   static const loadMoreLabel = 'Daha Fazla Yükle';
 
-  static const carMods = [
+  static List<String> get carMods =>
+      CatalogStore.read('explore_items.carMods', seedCarMods);
+
+  static const seedCarMods = [
     'Change Color',
     'Customize Rims',
     'Suspension',
@@ -26,7 +31,10 @@ class ExploreItems {
     'Upholstery',
   ];
 
-  static const styleBuilder = [
+  static List<String> get styleBuilder =>
+      CatalogStore.read('explore_items.styleBuilder', seedStyleBuilder);
+
+  static const seedStyleBuilder = [
     'American',
     'Japanese',
     'Off Road',
@@ -34,7 +42,10 @@ class ExploreItems {
     'Racing',
   ];
 
-  static const wallpaperMaker = [
+  static List<String> get wallpaperMaker =>
+      CatalogStore.read('explore_items.wallpaperMaker', seedWallpaperMaker);
+
+  static const seedWallpaperMaker = [
     'Most WT',
     'Countryside',
     'Tuner Shop',
@@ -42,7 +53,10 @@ class ExploreItems {
     'Night City',
   ];
 
-  static const aiEdits = [
+  static List<String> get aiEdits =>
+      CatalogStore.read('explore_items.aiEdits', seedAiEdits);
+
+  static const seedAiEdits = [
     'Car Enhance',
     'Speed Trap',
     'Grand City Auto',

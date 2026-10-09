@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:perasoft_staj/product/model/app_selections.dart';
-import 'package:perasoft_staj/product/cache/selection_cache_manager.dart';
+import 'package:perasoft_staj/product/cache/selection_repository.dart';
 import 'package:perasoft_staj/feature/ai_video/view/ai_video_view.dart';
 import 'package:perasoft_staj/feature/explore/view/explore_view.dart';
 import 'package:perasoft_staj/feature/garage/view/garage_view.dart';
@@ -19,7 +19,7 @@ class MainTabsView extends StatefulWidget {
   });
   final MainTab initialTab;
   final AppSelections? initialSelections;
-  final SelectionCacheManager? cacheManager;
+  final SelectionRepository? cacheManager;
 
   @override
   State<MainTabsView> createState() => _MainTabsViewState();

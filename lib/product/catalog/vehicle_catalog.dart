@@ -1,3 +1,4 @@
+import 'package:perasoft_staj/product/catalog/catalog_store.dart';
 import 'package:perasoft_staj/product/constants/image_items.dart';
 
 class CatalogVehicle {
@@ -14,7 +15,10 @@ class CatalogVehicle {
 
 // One local catalog; screens store an ID, not a translated label or list index.
 class VehicleCatalog {
-  static const samples = <CatalogVehicle>[
+  static List<CatalogVehicle> get samples =>
+      CatalogStore.read('vehicle_catalog.samples', seedSamples);
+
+  static const seedSamples = <CatalogVehicle>[
     CatalogVehicle(
       id: 'mustang_classic',
       label: 'Klasik Mustang',
@@ -38,8 +42,11 @@ class VehicleCatalog {
     ),
   ];
 
-  static const all = <CatalogVehicle>[
-    ...samples,
+  static List<CatalogVehicle> get all =>
+      CatalogStore.read('vehicle_catalog.all', seedAll);
+
+  static const seedAll = <CatalogVehicle>[
+    ...seedSamples,
     CatalogVehicle(
       id: 'porsche_race',
       label: 'Porsche Yarış',

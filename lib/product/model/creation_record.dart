@@ -15,7 +15,7 @@ final class CreationRecord extends Equatable {
 
   final String id;
   final DateTime createdAt;
-  final DemoGenerationResult result;
+  final GenerationResult result;
   String get vehicleId => result.request.vehicleId;
   bool get isVideoDemo => result.request is AiVideoGenerationRequest;
   String get source => switch (result.request) {
@@ -36,7 +36,9 @@ final class CreationRecord extends Equatable {
   Map<String, Object?> toJson() => {
     'id': id,
     'createdAt': createdAt.toUtc().toIso8601String(),
-    'kind': 'demo',
+    'kind': result is AiImageGenerationResult ? 'aiImage' : 'demo',
+    if (result is AiImageGenerationResult)
+      'outputImagePath': result.displayImagePath,
     'originalImagePath': result.originalImagePath,
     'input': switch (result.request) {
       GenerationRequest r => {
@@ -66,10 +68,15 @@ final class CreationRecord extends Equatable {
     },
   };
 
-  factory CreationRecord.fromJson(Map<String, dynamic> json) {
+  factory CreationRecord.fromJson(
+    Map<String, dynamic> json, {
+    bool validateCatalog = true,
+  }) {
     final id = _string(json, 'id');
     final date = DateTime.tryParse(_string(json, 'createdAt'));
-    if (id.isEmpty || date == null || json['kind'] != 'demo') {
+    if (id.isEmpty ||
+        date == null ||
+        !['demo', 'aiImage'].contains(json['kind'])) {
       throw const FormatException('Geçersiz demo kaydı');
     }
     final input = json['input'];
@@ -103,18 +110,37 @@ final class CreationRecord extends Equatable {
     };
     final path = _string(json, 'originalImagePath');
     // Do not restore unknown assets or silently repair a historical request.
+    if (path.isEmpty) throw const FormatException('Boş orijinal görsel');
     try {
-      final plan = const GenerationInputResolver().resolve(request);
-      if (path != plan.vehicle.assetPath) {
-        throw const FormatException('Geçersiz orijinal görsel');
+      if (validateCatalog) {
+        final plan = const GenerationInputResolver().resolve(request);
+        if (path != plan.vehicle.assetPath) {
+          throw const FormatException('Geçersiz orijinal görsel');
+        }
       }
     } on GenerationInputException {
       throw const FormatException('Geçersiz geçmiş seçimi');
     }
+    if (json['kind'] == 'aiImage' &&
+        (request is! ExploreGenerationRequest ||
+            (request.operation != ExploreOperation.changeColor &&
+                request.operation != ExploreOperation.spoiler) ||
+            !RegExp(r'^ai-[a-f0-9]{32}$').hasMatch(id) ||
+            json['outputImagePath'] != 'mody-media:${id.substring(3)}')) {
+      throw const FormatException('Geçersiz AI sonucu');
+    }
     return CreationRecord(
       id: id,
       createdAt: date.toUtc(),
-      result: DemoGenerationResult(request: request, originalImagePath: path),
+      result: json['kind'] == 'aiImage'
+          ? AiImageGenerationResult(
+              request: request,
+              originalImagePath: path,
+              outputImagePath: _string(json, 'outputImagePath'),
+              id: id,
+              createdAt: date.toUtc(),
+            )
+          : DemoGenerationResult(request: request, originalImagePath: path),
     );
   }
 

@@ -43,3 +43,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Local Django runtime, credentials and databases (never commit user data).
+backend/.venv/
+backend/.local.json
+backend/.cloudflare.local.json
+backend/.cloudflare-secret-*.tmp
+backend/flutter.local.json
+backend/__pycache__/
+**/__pycache__/
+backend/*.db
+backend/*.sqlite3
+backend/*.log

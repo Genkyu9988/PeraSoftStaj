@@ -6,7 +6,7 @@ abstract interface class GenerationService {
   Future<GenerationResult> generate(GenerationInput request);
 }
 
-enum GenerationFailureKind { demo, unavailable, timeout }
+enum GenerationFailureKind { demo, unavailable, timeout, limit }
 
 final class GenerationException implements Exception {
   const GenerationException(this.kind);

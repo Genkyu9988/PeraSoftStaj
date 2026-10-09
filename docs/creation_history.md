@@ -1,5 +1,9 @@
 # Demo üretim geçmişi — 8 Ekim 2026
 
+9 Ekim güncellemesi: üretim ortamındaki depolama SQLite'a geçti. Aşağıdaki
+SharedPreferences açıklaması ilk sürümün tarihli kaydı ve legacy taşıma
+okuyucusu için geçerlidir. Güncel [SQLite şeması ve geçiş](sqlite_history.md).
+
 Üret'in üç modu, Explore ve AI Video'daki kabul edilmiş başarılı demo
 işlemleri artık ortak geçmişe eklenir. Araç seçme panellerindeki Your
 Creations ve profil/Garaj aynı listeyi kullanır. Gerçek AI eklenmedi.

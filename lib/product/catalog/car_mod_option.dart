@@ -1,3 +1,4 @@
+import 'package:perasoft_staj/product/catalog/catalog_store.dart';
 import 'package:perasoft_staj/product/constants/image_items.dart';
 import 'package:perasoft_staj/product/model/image_choice.dart';
 
@@ -21,7 +22,10 @@ class CarModOption implements ImageChoice {
 }
 
 class CarModCatalog {
-  static const groups = <String, List<CarModOption>>{
+  static Map<String, List<CarModOption>> get groups =>
+      CatalogStore.read('car_mod_option.groups', seedGroups);
+
+  static const seedGroups = <String, List<CarModOption>>{
     'Spoiler': [
       CarModOption(
         'spoiler.race_wing',

@@ -4,6 +4,60 @@ Bu proje, Mody AI uygulamasının ana ekranından esinlenilen bir Flutter arayü
 çalışmasıdır. Dart ve Flutter konuları staj süresince bu proje üzerinde
 uygulanır.
 
+## Django yerel backend — 9 Ekim 2026
+
+Varsayılan veri kaynağı artık Django API. Backend kodu `backend/` içinde;
+yerel geliştirme veritabanı `C:\capstone-main\modyai.db`. Asansör veritabanından
+ayrıdır. Kataloglar, seçimler ve geçmiş API üzerinden okunup yazılır; demo AI
+servisi değişmedi. Sunucu açık olmalı; gerçek hesap/üretim yayını eklenmedi.
+
+```powershell
+# Terminal 1 (açık kalsın)
+.\backend\.venv\Scripts\python.exe backend/manage.py runserver 127.0.0.1:8765 --noreload
+# Terminal 2
+flutter run --dart-define-from-file=backend/flutter.local.json
+```
+
+Kurulum, API sözleşmesi, güvenlik sınırları, veri yönetimi ve yerel SQLite'a
+bilinçli geri dönüş: [Django backend rehberi](docs/django_backend.md).
+Yerel yapılandırma dosyaları anahtar içerir; Git'e eklenmez.
+
+**959 Flutter testi + 15 API testi başarılı**, statik analiz temiz. Emülatörde
+mevcut 7 kayıt, sunucuya seçim yazma, yeniden açılış ve backend kapalı → tekrar
+dene akışı doğrulandı. İnternete yayınlanmış veya çok kullanıcılı bir servis değildir.
+
+## Önceki adım: SQLite v2 — 9 Ekim 2026
+
+Ekranlar artık SQLite'tan yüklenen katalogları kullanıyor. Araç/parça listeleri,
+stil/renk/açı seçenekleri, Explore/AI Video kartları, kapaklar, seçim ayarları
+ve geçmiş `modyai.db` içinde. SharedPreferences yalnız bir kerelik aktarım
+kaynağı ve kurtarma kopyasıdır; üretim akışında yeni seçimler SQLite'a yazılır.
+
+SQL ile yeni araba/spoiler ekleme örnekleri, PK/FK ilişkileri, görsel dosyası/URL
+desteği ve sınırlar: [SQLite katalog rehberi](docs/sqlite_catalog.md).
+Uygulamayı verilerini silmeden tamamen yeniden başlatın. Katalog oturum başında
+yüklenir; yönetim ekranı ve bulut eşitleme eklenmedi.
+
+**946 test başarılı**, statik analiz temiz, Android debug APK derlendi.
+Emülatörde eski 6 kayıt ve seçimler korunarak v2'ye geçiş ve yeniden açılış
+doğrulandı; sayaçlar 4 Mody’s + 2 video olarak kaldı.
+
+## Önceki adım: SQLite yerel geçmiş v1 — 9 Ekim 2026
+
+Garaj/Your Creations geçmişi `modyai.db` dosyasına taşındı. İlk açılışta
+SharedPreferences'taki eski kayıtlar tek transaction ile içe alınır; eski
+veri kurtarma kopyası olarak silinmez. Küçük form seçimleri SharedPreferences'ta
+bu ilk adımda kalıyordu; v2 ile bunlar da SQLite'a taşındı.
+
+`vehicles → creations → creation_parts` ilişkileri 1:N'dir; PK, FK, bileşik
+anahtarlar ve güvenli taşıma ayrıntıları [SQLite şema notunda](docs/sqlite_history.md).
+Yeni paket nedeniyle uygulamayı durdurup `flutter run` ile yeniden başlatın;
+uygulama verilerini temizlemeyin. Gerçek AI veya bulut eşitleme eklenmedi.
+
+**933 test başarılı**, statik analiz temiz, Android debug APK derlendi.
+Bu geçişin gerçek cihazda eski kayıtlarla kontrolü henüz yapılmadı;
+bağlı emülatör/telefon bulunmuyordu.
+
 ## Demo geçmişi ve stil seçimi — 9 Ekim 2026
 
 Your Creations/Garaj geçmişi ve Stil → Uygula görsel düzeltmesi birlikte

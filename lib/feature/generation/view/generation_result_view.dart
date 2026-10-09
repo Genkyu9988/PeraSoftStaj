@@ -21,14 +21,13 @@ class GenerationResultView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Exhaustive: adding real media cannot silently render it as a demo photo.
-    final originalImagePath = switch (result) {
-      DemoGenerationResult(:final originalImagePath) => originalImagePath,
-    };
+    final originalImagePath = result.displayImagePath;
+    final isReal = result is AiImageGenerationResult;
     final summary = _summary(result.request);
     final isVideo = result.request is AiVideoGenerationRequest;
     return Scaffold(
       key: const Key('generationResultPage'),
-      appBar: AppBar(title: const Text('Demo sonuç')),
+      appBar: AppBar(title: Text(isReal ? 'AI sonucu' : 'Demo sonuç')),
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(
@@ -49,13 +48,17 @@ class GenerationResultView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Demo sonuç — AI ile üretilmedi',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Text(
+                          isReal
+                              ? 'AI ile düzenlendi'
+                              : 'Demo sonuç — AI ile üretilmedi',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          isVideo
+                          isReal
+                              ? 'Cloudflare ile görsel düzenleme denemesi. AI diğer ayrıntıları da değiştirmiş olabilir.'
+                              : isVideo
                               ? 'Aşağıdaki fotoğraf seçtiğiniz orijinal araçtır. Seçilen şablon uygulanmadı; gerçek video üretilmedi.'
                               : 'Aşağıdaki fotoğraf seçtiğiniz orijinal araçtır. İstenen değişiklikler görsele uygulanmadı.',
                         ),
@@ -69,8 +72,9 @@ class GenerationResultView extends StatelessWidget {
                       aspectRatio: 4 / 3,
                       child: ModyAssetImage(
                         path: originalImagePath,
-                        semanticLabel:
-                            'Seçilen orijinal araç; AI ile üretilmedi',
+                        semanticLabel: isReal
+                            ? 'AI ile düzenlenen araç'
+                            : 'Seçilen orijinal araç; AI ile üretilmedi',
                       ),
                     ),
                   ),

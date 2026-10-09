@@ -5,6 +5,7 @@ import 'package:perasoft_staj/feature/creations/view/widget/creation_grid.dart';
 import 'package:perasoft_staj/feature/creations/view/widget/history_persistence_notice.dart';
 import 'package:perasoft_staj/feature/generation/view/generation_result_view.dart';
 import 'package:perasoft_staj/product/model/creation_record.dart';
+import 'package:perasoft_staj/product/model/generation_result.dart';
 import 'package:perasoft_staj/product/navigation/navigation_helper.dart';
 import 'package:perasoft_staj/product/init/theme/color_items.dart';
 import 'package:perasoft_staj/feature/garage/data/garage_items.dart';
@@ -84,6 +85,9 @@ class _GarageViewState extends State<GarageView> {
                       child: Column(
                         children: [
                           _GarageProfile(
+                            hasReal: history.records.any(
+                              (r) => r.result is AiImageGenerationResult,
+                            ),
                             images: history.images.length,
                             videos: history.videos.length,
                           ),
@@ -154,7 +158,12 @@ class _GarageViewState extends State<GarageView> {
 }
 
 class _GarageProfile extends StatelessWidget {
-  const _GarageProfile({required this.images, required this.videos});
+  const _GarageProfile({
+    required this.images,
+    required this.videos,
+    required this.hasReal,
+  });
+  final bool hasReal;
   final int images;
   final int videos;
 
@@ -203,10 +212,12 @@ class _GarageProfile extends StatelessWidget {
             ],
           ),
           if (images + videos > 0)
-            const Padding(
-              padding: EdgeInsets.all(8),
+            Padding(
+              padding: const EdgeInsets.all(8),
               child: Text(
-                'Demo işlem sayıları • Gerçek görsel/video üretilmedi',
+                hasReal
+                    ? 'AI görselleri ve demo kayıtları • Videolar demodur'
+                    : 'Demo işlem sayıları • Gerçek görsel/video üretilmedi',
                 textAlign: TextAlign.center,
               ),
             ),
